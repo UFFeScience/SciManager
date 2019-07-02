@@ -1,0 +1,15 @@
+ <!-- Search filter content -->
+<div th:if="${filter != null}">
+	<span th:if="${filter.hasTextFilter == true}">Buscado por:</span>
+
+	<th:block th:each="filterField : ${filter.filterFields}">
+		<div th:if="${filterField.isTextField == true}" class="alert filter-alert-info alert-dismissible fade in" role="alert">
+			<a type="button" class="close clear-search-button" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true" data-toggle="tooltip" data-placement="right" th:title="|Limpar ${filterField.label}|">×</span>
+			</a>
+			<span th:if="${filterField.text != null}" class="filter-field" th:attr="data-field-name=${filterField.name}, data-field-value=${filterField.value}" th:text="${filterField.text}">[..]</span>
+			<span th:if="${filterField.text == null}" class="filter-field" th:attr="data-field-name=${filterField.name}, data-field-value=${filterField.value}" th:text="${filterField.value}">[..]</span>
+		</div>
+	</th:block>
+</div>
+<!-- /Search filter content -->

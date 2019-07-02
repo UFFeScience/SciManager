@@ -1,0 +1,36 @@
+<!-- Add users to group modal -->
+<div class="modal fade bs-add-user-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+   	<div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="addUserLabel">Adicionar usuários</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post" id="add-users-form" class="form-horizontal form-label-left" th:novalidate="true" role="form" th:action="@{/user-group/add-users}">
+                    <input id="add-user-user-group-id" type="hidden" name="userGroupId" value="" />
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Nome do usuário</label>
+                        <div class="chosen-component-input add-usernames col-md-6 col-sm-6 col-xs-12">
+                            <select name="emails" class="add-usernames-select form-control" multiple="multiple">
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default cancel-button" data-dismiss="modal">Cancelar</button>
+                <button id="add-users-submit-button" type="button" class="action-button btn btn-success">
+                	<span class="action-text">Salvar</span>
+                	<i class="fa fa-spinner loading-action hide fa-pulse fa-2x fa-fw"></i>
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- /Add users to group modal -->

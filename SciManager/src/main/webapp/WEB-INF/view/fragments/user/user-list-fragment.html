@@ -1,0 +1,91 @@
+<!-- page body -->
+<div class="page-main-content">
+	<div class="page-title">
+		<div class="no-pad-left title_left col-md-12 col-sm-12 col-xs-12">
+			<div class="no-pad-left col-md-12 col-sm-12 col-xs-12">
+				<h2>Usuários</h2>
+				<div th:replace="fragments/search-filter"></div>
+			</div>
+		</div>
+
+		<form th:replace="fragments/user/user-search"></form>
+		<input id="search-url" type="hidden" name="searchUrl" th:value="${searchListUrl}" />
+	</div>
+
+	<div class="clearfix"></div>
+
+	<div class="row loaded-content">
+		<div class="col-md-12">
+			<div class="x_panel">
+				<div class="x_content">
+
+					<div class="row">
+						<div class="col-md-12 col-sm-12 col-xs-12 text-center">
+							<div class="pull-left pad-left10">
+								<button type="button" class="btn btn-success" data-toggle="modal" data-target=".bs-create-user-modal-lg">Criar usuário <i class="fa fa-plus"></i></button>
+							</div>
+							<ul th:replace="fragments/user/letters-filter"></ul>
+						</div>
+
+						<div class="clearfix"></div>
+
+						<!-- start user list -->
+						<div class="user-row col-md-12 col-sm-12 col-xs-12" th:each="userDTOs : ${userRows}">
+
+							<div class="col-md-3 col-sm-3 col-xs-12" th:each="user : ${userDTOs}">
+								<div class="well profile_view">
+									<div class="col-sm-12 user-card-content">
+										<h4 class="brief user-role"><i th:text="${user.userRole.roleName}">[..]</i></h4>
+										<div class="left col-xs-8">
+											<h2 th:text="${user.username}">[..]</h2>
+											<p><strong>e-mail: </strong> <span th:text="${user.email}"></span> </p>
+											<p th:if="${user.institution != null}"><strong>Instituição: </strong> <span th:text="${user.institution}"></span> </p>
+											<p th:if="${user.institution == null}"><strong>Instituição: </strong> <span>--</span> </p>
+										</div>
+										<div th:if="${user.hasProfileImage == true}" class="pull-right right col-xs-4 text-center">
+											<img th:src="@{/resources/images/processing.gif}" th:attr="data-user-id=|img-profile-${user.userId}|" alt="imagem de perfil do usuário" class="img-responsive img-loading-medium img-async-load" />
+										</div>
+										<div th:if="${user.hasProfileImage != true}" class="pull-right right col-xs-4 text-center">
+											<img th:src="@{/resources/images/user.png}" alt="imagem de perfil do usuário" class="img-responsive" />
+										</div>
+									</div>
+									<div class="col-xs-12 bottom text-center actions">
+										<div th:if="${user.userId != headerData.currentUser.userId}" class="deactivate-profile-link emphasis pull-right">
+											<a th:if="${user.userRole != T(com.uff.scimanager.domain.Role).USER}" data-toggle="modal" data-target=".bs-change-user-role-modal-lg" th:id="|role-${user.userId}|" type="button" class="change-role role-user btn btn-default btn-xs">
+												<i data-toggle="tooltip" data-placement="top" title="Mudar perfil para Usuário" class="fa fa-edit"></i>
+											</a>
+											<a th:if="${user.userRole == T(com.uff.scimanager.domain.Role).USER}" data-toggle="modal" data-target=".bs-change-user-role-modal-lg" th:id="|role-${user.userId}|" type="button" class="change-role role-admin btn btn-default btn-xs">
+												<i data-toggle="tooltip" data-placement="top" title="Mudar perfil para Administrador" class="fa fa-edit"></i>
+											</a>
+											<a th:id="|remove-user-${user.userId}|" data-toggle="modal" data-target=".bs-remove-user-modal-lg" type="button" class="remove-user-button btn btn-default btn-xs">
+												<i data-toggle="tooltip" data-placement="top" data-container="body" title="Remover" class="fa red fa-trash-o"></i>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+						<!-- end user list -->
+
+						<div class="alert-no-content alert alert-info alert-dismissible" role="alert" th:if="${userRows != null and userRows.isEmpty()}">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+							</button>
+							Nenhum usuário encontrado
+						</div>
+
+						<div class="loading-data-async">
+	           				<i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+	           			</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div th:replace="fragments/pagination"></div>
+
+		<div th:replace="fragments/user/edit-user-role-modal"></div>
+		<div th:replace="fragments/user/remove-user-modal"></div>
+	</div>
+</div>
+<!-- /page body -->

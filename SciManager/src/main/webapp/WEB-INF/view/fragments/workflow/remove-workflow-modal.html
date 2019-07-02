@@ -1,0 +1,28 @@
+<!-- Remove workflow modal -->
+<div class="modal fade bs-remove-workflow-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+   	<div class="modal-dialog modal-md">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="deleteWorkflowLabel">Deseja mesmo excluir o workflow?</h4>
+                <h4 class="modal-title hide" id="canNotDeleteWorkflowLabel">Não será possível excluir o workflow, pois o mesmo está associado a <span id="dependencies-message"></span>. Desassocie o workflow para poder removê-lo.</h4>
+            </div>
+            <div class="modal-footer">
+            	<form method="post" id="remove-workflow-form" class="form-horizontal form-label-left" th:novalidate="true" role="form" th:action="@{/workflow/remove-workflow}">
+	            	<input id="authorization-token" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+	            	<input id="remove-workflow-id" type="hidden" name="workflowId" />
+
+	                <button type="button" class="btn btn-default cancel-button" data-dismiss="modal">Cancelar</button>
+	                <button id="delete-workflow-button" type="button" data-dismiss="modal" class="action-button btn btn-success">
+	                	<span class="action-text">Confirmar</span>
+	                	<i class="fa fa-spinner loading-action hide fa-pulse fa-2x fa-fw"></i>
+	                </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- /Remove workflow modal -->

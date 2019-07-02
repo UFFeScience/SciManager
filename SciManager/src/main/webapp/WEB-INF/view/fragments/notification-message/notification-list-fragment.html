@@ -1,0 +1,72 @@
+<!-- page body -->
+<div class="page-main-content">
+	<div class="page-title">
+		<div class="no-pad-left title_left col-md-12 col-sm-12 col-xs-12">
+			<div class="no-pad-left col-md-12 col-sm-12 col-xs-12">
+				<h2>Suas notificações</h2>
+			</div>
+		</div>
+
+		<form th:replace="fragments/notification-message/notification-search"></form>
+		<input id="search-url" type="hidden" name="searchUrl" th:value="${searchListUrl}" />
+	</div>
+
+	<div class="clearfix"></div>
+
+	<div class="row loaded-content">
+		<div class="col-md-12 sci-manager-data-table-container">
+			<div class="x_panel">
+				<div class="x_content">
+
+					<div class="row">
+
+						<div class="col-md-12 col-sm-12 col-xs-12 pad-left20" style="text-align:center;">
+							<div class="pull-left">
+								<button id="btn-visualize-all" th:if="${notificationMessageDTOs != null and !notificationMessageDTOs.isEmpty()}" type="button" class="btn btn-default disabled visualize-all">Marcar todas como visualizadas <i class="fa fa-envelope-open"></i></button>
+							</div>
+						</div>
+
+						<div class="clearfix"></div>
+
+						<!-- start notifications list -->
+						<div class="table-container notifications-container">
+							<ul class="messages">
+								<th:block th:each="notificationMessage : ${notificationMessageDTOs}">
+									<li th:classappend="${notificationMessage.visualized} == false ? 'notification-not-visualized' : ''">
+										<div class="message_date">
+											<a th:href="@{|${notificationMessage.messageLink}|}" th:classappend="${notificationMessage.visualized} == true ? 'notification-visuazed' : ''" th:attr="data-message-id=|${notificationMessage.notificationMessageId}|" data-toggle="tooltip" data-placement="top" title="Ir para ação" class="notification-item btn-circle md-details-button btn btn-default btn-xs">
+												<i class="avoid-event fa fa-external-link"></i>
+											</a>
+											<a th:classappend="${notificationMessage.visualized} == true ? 'hide' : ''" th:attr="data-message-id=|${notificationMessage.notificationMessageId}|" data-toggle="tooltip" data-placement="top" title="Marcar como visualizado" class="notification-item btn-circle mark-visualized md-details-button btn btn-default btn-xs">
+												<i class="avoid-event fa fa-envelope-open"></i>
+											</a>
+										</div>
+										<div class="message_wrapper">
+											<span class="message" th:utext="${notificationMessage.messageBody}">[..]</span>
+											<br />
+											<i class="fa fa-clock-o"></i>
+											<span class="date-notification" th:text="${notificationMessage.actionDate}">[..]</span>
+										</div>
+									</li>
+								</th:block>
+							</ul>
+						</div>
+						<!-- end notifications list -->
+
+						<div class="alert-no-content alert alert-info alert-dismissible" role="alert" th:if="${notificationMessageDTOs != null and notificationMessageDTOs.isEmpty()}">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+							</button>
+							Nenhuma notificação encontrada
+						</div>
+
+						<div class="loading-data-async">
+	           				<i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+	           			</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div th:replace="fragments/pagination"></div>
+	</div>
+</div>
+<!-- /page body -->

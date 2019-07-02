@@ -1,0 +1,110 @@
+<!-- page body -->
+<div class="page-main-content">
+	<div class="page-title">
+		<div class="no-pad-left title_left col-md-12 col-sm-12 col-xs-12">
+			<div class="no-pad-left col-md-12 col-sm-12 col-xs-12">
+				<h2>Grupos de usuários</h2>
+				<div th:replace="fragments/search-filter"></div>
+			</div>
+		</div>
+
+		<form th:replace="fragments/advanced-search"></form>
+		<input id="search-url" type="hidden" name="searchUrl" th:value="${searchListUrl}" />
+	</div>
+
+	<div class="clearfix"></div>
+
+	<div class="row loaded-content">
+		<div class="col-md-12 sci-manager-data-table-container">
+			<div class="x_panel">
+				<div class="x_content">
+
+					<div class="row">
+
+						<div class="col-md-12 col-sm-12 col-xs-12">
+							<div class="pull-left">
+								<button type="button" class="btn btn-success" data-toggle="modal" data-target=".bs-create-group-modal-lg">Criar grupo de usuários <i class="fa fa-plus"></i></button>
+							</div>
+
+						</div>
+
+						<div class="clearfix"></div>
+
+						<!-- start user-group list -->
+						<div class="table-container">
+							<table class="table default-sci-table">
+								<thead>
+									<tr>
+										<th style="width: 20%">Nome do grupo</th>
+										<th>Membros do grupo</th>
+										<th style="width: 25%"></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="userGroup : ${userGroupDTOs}">
+										<td>
+											<a th:id="|group-name-${userGroup.userGroupId}|" th:text="${userGroup.groupName}">[..]</a>
+											<br />
+										</td>
+										<td>
+											<ul th:if="${userGroup.groupUsers != null and !userGroup.groupUsers.isEmpty()}" class="list-inline group-users-list">
+												<li th:each="user : ${userGroup.groupUsers}">
+													<div class="alert alert-dismissible group-user-info display-inline-block" role="alert">
+														<div class="remove-user-group">
+															<a th:id="|remove-group-user-${user.userId}-${userGroup.userGroupId}|" type="button" class="close remove-user-from-group" data-toggle="modal" data-target=".bs-remove-user-modal-lg" aria-label="Close">
+																<span aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Remover do grupo">×</span>
+															</a>
+														</div>
+
+														<div th:if="${user.hasProfileImage == true}" class="user-group-profile-image">
+															<img data-toggle="tooltip" data-placement="top" th:title="${user.username}" th:src="@{/resources/images/processing.gif}" th:attr="data-user-id=|img-profile-${user.userId}|" alt="imagem de perfil do usuário" class="avatar img-loading-small img-async-load" />
+														</div>
+														<div th:if="${user.hasProfileImage != true}" class="user-group-profile-image">
+															<img data-toggle="tooltip" data-placement="top" th:title="${user.username}" th:src="@{/resources/images/user.png}" alt="imagem de perfil do usuário" class="avatar" />
+														</div>
+
+													</div>
+												</li>
+											</ul>
+											<span th:if="${userGroup.groupUsers == null or userGroup.groupUsers.isEmpty()}">--</span>
+										</td>
+										<td class="actions">
+											<a data-toggle="modal" data-target=".bs-add-user-modal-lg" th:id="|add-user-${userGroup.userGroupId}|" class="btn btn-default btn-xs add-user">
+												<i data-toggle="tooltip" data-placement="top" title="Adicionar usuário" class="fa green fa-plus"></i>
+											</a>
+											<a data-toggle="modal" data-target=".bs-edit-name-modal-lg" th:id="|edit-user-group-${userGroup.userGroupId}|" class="btn btn-default btn-xs edit-user-group">
+												<i data-toggle="tooltip" data-placement="top" title="Editar" class="fa fa-pencil"></i>
+											</a>
+											<a th:id="|remove-user-group-${userGroup.userGroupId}|" data-toggle="modal" data-target=".bs-remove-user-group-modal-lg" type="button" class="remove-user-group-button btn btn-default btn-xs">
+												<i data-toggle="tooltip" data-placement="top" title="Remover" class="fa red fa-trash-o"></i>
+											</a>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<!-- end user-group list -->
+
+						<div class="alert-no-content alert alert-info alert-dismissible" role="alert" th:if="${userGroupDTOs != null and userGroupDTOs.isEmpty()}">
+                        	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                            </button>
+                            Nenhum grupo de usuários encontrado
+                        </div>
+
+                        <div class="loading-data-async">
+	           				<i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+	           			</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<div th:replace="fragments/pagination"></div>
+
+		<div th:replace="fragments/user-group/add-users-to-group-modal"></div>
+		<div th:replace="fragments/user-group/edit-user-group-name-modal"></div>
+		<div th:replace="fragments/user-group/remove-user-group-modal"></div>
+		<div th:replace="fragments/user-group/remove-user-from-user-group-modal"></div>
+	</div>
+</div>
+<!-- /page body -->

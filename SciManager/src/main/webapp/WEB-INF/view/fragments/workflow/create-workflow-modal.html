@@ -1,0 +1,52 @@
+<!-- Create workflow modal -->
+<div class="modal fade bs-create-workflow-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+   	<div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="createWorkflowLabel">Criar workflow científico</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post" id="create-workflow-form" th:object="${workflowForm}" class="form-horizontal form-label-left" th:novalidate="true" role="form" th:action="@{/workflow/create-workflow}" accept-charset="UTF-8">
+
+					<div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="workflowName">Nome do workflow <span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input th:required="true" id="workflow-name" th:field="*{workflowName}" type="text" name="workflowName" data-validate-length-range="1,70" placeholder="Nome do workflow" class="form-control col-md-7 col-xs-12" />
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="swfms">Nome do SGWfC </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input readonly="readonly" id="swfms" th:field="*{swfms}" type="text" name="swfms" data-validate-length-range="0,70" placeholder="SGWfC" class="optional form-control col-md-7 col-xs-12" />
+                        </div>
+                    </div>
+
+                    <input type="hidden" th:field="*{scientificProjectId}" name="scientificProjectId" class="scientific-project-id" />
+                    <input type="hidden" th:field="*{scientificExperimentId}" name="scientificExperimentId" class="scientific-experiment-id" />
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Associe um grupo <span class="required">*</span></label>
+                        <div class="chosen-component-input user-group col-md-6 col-sm-6 col-xs-12">
+                            <select th:required="true" th:field="*{responsibleGroupName}" name="responsibleGroupName" class="user-group-select form-control" >
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default cancel-button" data-dismiss="modal">Cancelar</button>
+                <button id="create-workflow-submit-button" type="button" class="action-button btn btn-success">
+                	<span class="action-text">Salvar</span>
+                	<i class="fa fa-spinner loading-action hide fa-pulse fa-2x fa-fw"></i>
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- /Create workflow modal -->

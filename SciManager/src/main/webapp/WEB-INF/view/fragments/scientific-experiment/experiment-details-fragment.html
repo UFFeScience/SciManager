@@ -1,0 +1,37 @@
+<div class="x_content">
+	<div class="row">
+		<div th:if="${scientificExperimentDTO != null}" class="project_detail">
+			<input id="search-experiment-details-url" type="hidden" name="searchUrl" th:value="${searchExperimentDetailsUrl}" />
+
+			<p class="title">
+				<span th:id="|experiment-name-${scientificExperimentDTO.scientificExperimentId}|" th:text="${scientificExperimentDTO.experimentName}">[..]</span>
+				<span th:if="${scientificExperimentDTO.isEditablebyUser == true}" data-toggle="modal" data-target=".bs-edit-experiment-modal-lg" th:id="|edit-scientific-experiment-${scientificExperimentDTO.scientificExperimentId}|" class="edit-scientific-experiment">
+					<i data-toggle="tooltip" data-placement="top" title="Editar nome" class="fa fa-pencil pointer"></i>
+				</span>
+			</p><p></p>
+
+			<p class="title">Grupos responsáveis:</p>
+			<p>
+				<span th:text="${scientificExperimentDTO.responsibleGroupNames}"></span>
+			</p><p></p>
+
+			<table class="project-details-table">
+				<tr>
+					<td>
+						<p class="title">Workflows Científicos: <span th:text="${totalWorkflows}"></span></p>
+					</td>
+				</tr>
+			</table>
+		</div>
+
+		<div class="alert-no-content alert alert-info alert-dismissible" role="alert" th:if="${scientificExperimentDTO == null}">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+			</button>
+			Experimento científico não encontrado
+		</div>
+
+		<div class="loading-data-async">
+			<i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+		</div>
+	</div>
+</div>

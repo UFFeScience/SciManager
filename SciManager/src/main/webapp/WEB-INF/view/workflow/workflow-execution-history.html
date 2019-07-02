@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+									   xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head th:replace="fragments/base-layout :: common_header(~{::title}, ~{::link})">
+        <title>SciManager - UFF</title>
+
+        <!-- chosen -->
+        <link th:href="@{/resources/css/chosen/chosen.min.css}" rel="stylesheet" type="text/css" />
+
+        <!-- icheck -->
+        <link th:href="@{/resources/css/icheck/flat/green.css}" rel="stylesheet" type="text/css" />
+    </head>
+    <body class="nav-md">
+
+    	<div class="container body">
+            <div class="main_container">
+                <div th:replace="fragments/left-col"></div>
+        	    <div th:replace="fragments/top-nav"></div>
+
+            	<!-- page content -->
+                <div class="right_col" role="main">
+                    <!-- page body -->
+                    <div class="page-main-content">
+    	                <div th:replace="fragments/workflow/workflow-user-execution-history-fragment"></div>
+                	</div>
+                    	<!-- /page body -->
+
+    	            <div th:replace="fragments/footer"></div>
+                </div>
+                <!-- /page content -->
+
+            </div>
+        </div>
+
+    	<th:block th:replace="fragments/base-layout :: common_scripts(~{::script})">
+    		<!-- icheck -->
+    		<script th:src="@{/resources/js/icheck/icheck.min.js}"></script>
+
+    		<!-- chosen -->
+    		<script th:src="@{/resources/js/chosen/chosen.jquery.min.js}"></script>
+
+    		<!-- notification -->
+    		<script th:src="@{/resources/js/notify/pnotify.core.js}"></script>
+    		<script th:src="@{/resources/js/notify/pnotify.buttons.js}"></script>
+    		<script th:src="@{/resources/js/notify/pnotify.nonblock.js}"></script>
+
+    	  	   <!-- diff-match-patch -->
+    	    <script th:src="@{/resources/js/diff-match-patch/javascript/diff_match_patch.js}"></script>
+
+    	    <!--  datepicker -->
+    	    <script th:src="@{/resources/js/moment.min2.js}"></script>
+    	    <script th:src="@{/resources/js/datepicker/daterangepicker.js}"></script>
+
+    	    <!-- mask -->
+    	    <script th:src="@{/resources/js/mask/jquery.mask.js}"></script>
+
+    		<!-- validator -->
+    		<script th:src="@{/resources/js/validator/validator.js}"></script>
+
+    		<!-- custom view js -->
+    		<script th:src="@{/resources/js/custom-view-js/sci-manager.commons.js}"></script>
+    		<script th:src="@{/resources/js/custom-view-js/notifications.commons.js}"></script>
+    		<script th:src="@{/resources/js/custom-view-js/async-data.commons.js}"></script>
+    		<script th:src="@{/resources/js/custom-view-js/filter-search.commons.js}"></script>
+    		<script th:src="@{/resources/js/custom-view-js/popover.commons.js}"></script>
+
+    		<script th:src="@{/resources/js/custom-view-js/workflow-user-execution.js}"></script>
+    		<script th:src="@{/resources/js/custom-view-js/model-file.js}"></script>
+    	</th:block>
+    </body>
+</html>

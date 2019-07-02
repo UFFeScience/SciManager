@@ -1,0 +1,25 @@
+ <!-- Search content -->
+<form id="search-form" role="form">
+	<div class="title_right pull-right col-md-10 col-sm-10 col-xs-12" th:with="initialDate=${filter.getFieldValue('initialDate')}, finalDate=${filter.getFieldValue('finalDate')}">
+       	 <div class="input-group filter-date-search pull-right">
+       	 	<button type="button" class="action-button form-group search-date-button btn btn-default pull-right">
+            	<span class="action-text">Buscar</span>
+            	<i class="fa fa-spinner loading-action hide fa-pulse fa-2x fa-fw"></i>
+            </button>
+       	 	<div class="pull-right">
+       	 		<div class="col-md-5 pull-right xdisplay_inputx form-group has-feedback">
+		            <input type="text" name="finalDate" th:value="${finalDate}" class="form-control has-feedback-left calendar-filter date-input" placeholder="Data final" aria-describedby="inputSuccess2Status" />
+		            <span class="fa fa-calendar form-control-feedback left" aria-hidden="true"></span>
+		            <span id="inputSuccess2Status" class="sr-only">(success)</span>
+	            </div>
+
+	            <div class="col-md-5 pull-right xdisplay_inputx form-group has-feedback">
+		            <input type="text" name="initialDate" th:value="${initialDate}" class="form-control has-feedback-left calendar-filter date-input" placeholder="Data inicial" aria-describedby="inputSuccess2Status" />
+		            <span class="fa fa-calendar form-control-feedback left" aria-hidden="true"></span>
+		            <span id="inputSuccess2Status" class="sr-only">(success)</span>
+	            </div>
+            </div>
+     	</div>
+	</div>
+</form>
+<!-- /Search content -->

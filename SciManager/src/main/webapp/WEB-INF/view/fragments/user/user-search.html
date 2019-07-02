@@ -1,0 +1,20 @@
+ <!-- Search content -->
+<form id="search-form" role="form">
+	<div class="title_right col-md-10 col-sm-10 col-xs-12" th:with="letter=${filter.getFieldValue('letter')}">
+    	 <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+        	 <div class="input-group" id="regular-search">
+             	<input id="currentSearch" type="text" name="search" class="form-control" placeholder="Buscar por..." />
+             	
+             	<span id="search-button" class="input-group-btn">
+        			<button id="edit-user-group-name-submit-button" type="button" class="action-button btn btn-default search-filter-button">
+	                	<span class="action-text">Buscar</span>
+	                	<i class="fa fa-spinner loading-action hide fa-pulse fa-2x fa-fw"></i>
+	                </button>
+    			</span>
+         	</div>
+     	</div>
+
+     	<input type="hidden" name="letter" th:value="${letter}" />
+	</div>
+</form>
+<!-- /Search content -->

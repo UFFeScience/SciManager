@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+										   xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+	<head th:replace="fragments/base-layout :: common_header(~{::title}, ~{::link})">
+		<title>SciManager - UFF</title>
+
+		<!-- chosen -->
+		<link th:href="@{/resources/css/chosen/chosen.min.css}" rel="stylesheet" type="text/css" />
+
+		<!-- summernote -->
+		<link th:href="@{/resources/css/summernote/summernote.css}" rel="stylesheet" type="text/css" />
+
+		<!-- tags -->
+		<link th:href="@{/resources/css/jqueryui/jquery-ui.css}" rel="stylesheet" type="text/css" />
+		<link th:href="@{/resources/css/tags/jquery.tagit.css}" rel="stylesheet" type="text/css" />
+
+		<!-- icheck -->
+		<link th:href="@{/resources/css/icheck/flat/green.css}" rel="stylesheet" type="text/css" />
+
+		<!-- c3 -->
+		<link th:href="@{/resources/css/c3/c3.min.css}" rel="stylesheet" type="text/css" />
+	</head>
+	<body class="nav-md">
+
+	    <div class="container body">
+	        <div class="main_container">
+
+	        	<div th:replace="fragments/left-col"></div>
+	        	<div th:replace="fragments/top-nav"></div>
+
+	        	<!-- page content -->
+	            <div class="right_col" role="main">
+
+	            	<!-- page body -->
+	            	<div class="page-main-content">
+	            		<div class="page-title">
+				            <div class="no-pad-left full-width title_left col-md-12 col-sm-12 col-xs-12">
+				            	<div class="no-pad-left col-md-12 col-sm-12 col-xs-12">
+									<h2 th:if="${workflowDTO != null}">
+										<small>Workflow</small>
+										<span th:text="|${workflowDTO.workflowName}|"></span>
+									</h2>
+									<ol th:if="${workflowDTO != null}" class="no-pad-left breadcrumb">
+										<li class="breadcrumb-item"><a th:href="@{/scientific-project/all-scientific-projects(page=1, myOwn=true)}">Projetos científicos</a></li>
+										<li class="breadcrumb-item"><a th:href="@{|/scientific-project/${workflowDTO.scientificProject.scientificProjectId}/project-details|}" th:text="${workflowDTO.scientificProject.projectName}">[..]</a></li>
+										<li class="breadcrumb-item"><a th:href="@{|/scientific-experiment/${workflowDTO.scientificExperiment.scientificExperimentId}/experiment-details|}" th:text="${workflowDTO.scientificExperiment.experimentName}">[..]</a></li>
+										<li class="breadcrumb-item active" th:text="|${workflowDTO.workflowName}|">[..]</li>
+									</ol>
+				            	</div>
+				            </div>
+				        </div>
+						<div class="sub-menu">
+							<ul class="tabs-menu">
+								<li class="workflow-dashboard active"><a>Dashboard</a></li>
+								<li class="workflow-documentation"><a>Documentação</a></li>
+								<li class="workflow-model-files"><a>Arquivos modelo</a></li>
+								<li class="workflow-detailed-graph"><a>Grafo detalhado</a></li>
+								<li class="workflow-macro-graph"><a>Grafo macro</a></li>
+								<li class="workflow-execution-history"><a>Histórico de execuções</a></li>
+						    </ul>
+						</div>
+
+						<div class="clearfix"></div>
+
+						<div class="tab-container">
+							<!-- tabs urls -->
+							<input id="search-dashboard-tab-url" type="hidden" name="searchUrl" th:value="${searchDashboardTabUrl}" />
+							<input id="search-workflow-documentation-tab-url" type="hidden" name="searchUrl" th:value="${searchDocumentationTabUrl}" />
+							<input id="search-model-files-tab-url" type="hidden" name="searchUrl" th:value="${searchModelFilesTabUrl}" />
+							<input id="search-detailed-graph-tab-url" type="hidden" name="searchUrl" th:value="${searchDetailedGraphTabUrl}" />
+							<input id="search-macro-graph-tab-url" type="hidden" name="searchUrl" th:value="${searchMacroGraphTabUrl}" />
+							<input id="search-execution-history-tab-url" type="hidden" name="searchUrl" th:value="${searchExecutionHistoryTabUrl}" />
+							<!-- end of tabs urls -->
+
+							<div class="tab-content"></div>
+
+							<div class="loading-data-async loading-tab">
+		           				<i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+		           			</div>
+
+						</div>
+
+	            	</div>
+	            	<!-- /page body -->
+
+		            <div th:replace="fragments/footer"></div>
+	            </div>
+	            <!-- /page content -->
+
+	        </div>
+	    </div>
+
+		<th:block th:replace="fragments/base-layout :: common_scripts(~{::script})">
+			<!-- notification -->
+			<script th:src="@{/resources/js/notify/pnotify.core.js}"></script>
+			<script th:src="@{/resources/js/notify/pnotify.buttons.js}"></script>
+			<script th:src="@{/resources/js/notify/pnotify.nonblock.js}"></script>
+
+			<!-- chosen -->
+			<script th:src="@{/resources/js/chosen/chosen.jquery.min.js}"></script>
+
+			<!-- summernote -->
+			<script th:src="@{/resources/js/summernote/summernote.min.js}"></script>
+
+			<!--  datepicker -->
+		    <script th:src="@{/resources/js/moment.min2.js}"></script>
+		    <script th:src="@{/resources/js/datepicker/daterangepicker.js}"></script>
+
+		    <!-- mask -->
+		    <script th:src="@{/resources/js/mask/jquery.mask.js}"></script>
+
+			<!-- validation -->
+		    <script th:src="@{/resources/js/parsley/parsley.min.js}"></script>
+			<script th:src="@{/resources/js/validator/validator.js}"></script>
+
+		    <!-- mermaid graph editor -->
+		    <script th:src="@{/resources/js/mermaid/build.js}"></script>
+
+			<!-- icheck -->
+			<script th:src="@{/resources/js/icheck/icheck.min.js}"></script>
+
+			<!-- diff-match-patch -->
+		    <script th:src="@{/resources/js/diff-match-patch/javascript/diff_match_patch.js}"></script>
+
+			<!-- custom view js -->
+			<script th:src="@{/resources/js/custom-view-js/sci-manager.commons.js}"></script>
+			<script th:src="@{/resources/js/custom-view-js/notifications.commons.js}"></script>
+			<script th:src="@{/resources/js/custom-view-js/async-data.commons.js}"></script>
+			<script th:src="@{/resources/js/custom-view-js/filter-search.commons.js}"></script>
+			<script th:src="@{/resources/js/custom-view-js/popover.commons.js}"></script>
+
+			<script th:src="@{/resources/js/custom-view-js/workflow-dashboard.js}"></script>
+			<script th:src="@{/resources/js/custom-view-js/workflow.js}"></script>
+			<script th:src="@{/resources/js/custom-view-js/workflow-documentation.js}"></script>
+			<script th:src="@{/resources/js/custom-view-js/graph.functions.js}"></script>
+		    <script th:src="@{/resources/js/custom-view-js/graph.js}"></script>
+		    <script th:src="@{/resources/js/custom-view-js/detailed-graph.js}"></script>
+			<script th:src="@{/resources/js/custom-view-js/macro-graph.js}"></script>
+			<script th:src="@{/resources/js/custom-view-js/workflow-execution.js}"></script>
+			<script th:src="@{/resources/js/custom-view-js/model-file.commons.js}"></script>
+			<script th:src="@{/resources/js/custom-view-js/model-file.js}"></script>
+			<!--<script th:src="@{/resources/js/custom-view-js/workflow-metadata.js}"></script>-->
+
+			<script th:src="@{/resources/js/custom-view-js/workflow-details.js}"></script>
+		</th:block>
+
+	</body>
+</html>

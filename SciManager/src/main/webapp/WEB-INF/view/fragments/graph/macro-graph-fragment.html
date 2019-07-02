@@ -1,0 +1,232 @@
+<div class="row loaded-content">
+    <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_content">
+
+                <div class="row">
+
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+
+						<input th:id="workflow-id" type="hidden" th:name="workflowId" th:value="${workflowDTO.workflowId}" />
+		                <textarea id="graph-editor" class="display-none" th:text="${workflowGraphCode}"></textarea>
+
+						<div class="graph-button-details col-lg-12">
+                            <div class="pull-left documentation-buttons">
+                            	<button id="cancel-graph" class="btn btn-default display-none" type="button">Cancelar</button>
+	                            <button id="edit-graph" class="btn btn-default" type="button">Editar</button>
+	                            <button id="save-macro-graph" class="btn btn-success display-none" type="button">Salvar</button>
+	                        </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <div class="graph-actions display-none well">
+                        	<div class="btn-group graph-button">
+				                <a data-toggle="dropdown" class="dropdown-toggle btn btn-app graph-btn">
+                                    <i class="fa fa-plus-square"></i> Adcionar nó
+                                </a>
+                                <div class="dropdown-menu add-node-menu pull-left" role="menu">
+	                            	<form id="add-node-form" data-parsley-validate="data-parsley-validate">
+
+					                    <div class="col-lg-12 filter-option">
+					                        <label class="control-label col-lg-12">Nome do nó</label>
+					                        <div class="add-node-field col-lg-12">
+					                            <input type="text" required="required" class="mermaid-input new-node-name form-control" placeholder="Nome" />
+					                        </div>
+					                    </div>
+
+					                    <div class="divider col-lg-12"></div>
+
+					        			<button class="btn btn-success node-button pull-right add-node" type="button">Adicionar</button>
+					        			<button class="btn btn-default cancel-node-button pull-right" type="button">Cancelar</button>
+				        			</form>
+	                            </div>
+                            </div>
+
+                            <div class="btn-group graph-button">
+                                <a data-toggle="dropdown" class="dropdown-toggle btn btn-app graph-btn">
+                                    <i class="fa fa-compress"></i> Adicionar ligação
+                                </a>
+                                <div class="dropdown-menu add-node-menu pull-left" role="menu">
+	                            	<form id="add-link-form" data-parsley-validate="data-parsley-validate">
+		                            	<div class="col-lg-12 filter-option">
+					                        <label class="control-label col-lg-12">Nó de origem</label>
+					                        <div class="add-node-field col-lg-12">
+					                            <select name="originNodeName" required="required" class="origin-node-select form-control" >
+					                            	<option disabled="disabled" value="nodeName" selected="selected">Selecione nó de origem</option>
+					                            </select>
+					                        </div>
+					                    </div>
+
+					                    <div class="col-lg-12 filter-option">
+					                        <label class="control-label col-lg-12">Nó de destino</label>
+					                        <div class="add-node-field col-lg-12">
+					                            <select name="originNodeName" required="required" class="destiny-node-select form-control" >
+					                            	<option disabled="disabled" value="nodeName" selected="selected">Selecione nó destino</option>
+					                            </select>
+					                        </div>
+					                    </div>
+
+					                    <div class="col-lg-12 filter-option">
+					                        <label class="control-label col-lg-12">Nota na ligação</label>
+					                        <div class="add-node-field col-lg-12">
+					                            <input type="text" class="mermaid-input link-note form-control" placeholder="Anotação" />
+					                        </div>
+					                    </div>
+
+					                    <div class="divider col-lg-12"></div>
+
+					        			<button class="btn btn-success node-button add-node-link pull-right" type="button">Adicionar</button>
+					        			<button class="btn btn-default cancel-node-button pull-right" type="button">Cancelar</button>
+	                            	</form>
+	                            </div>
+                            </div>
+
+                            <div class="btn-group graph-button">
+                                <a data-toggle="dropdown" class="dropdown-toggle btn btn-app graph-btn">
+                                    <i class="fa fa-pencil-square"></i>
+                                    Editar nó
+                                </a>
+                                <div class="dropdown-menu add-node-menu pull-left" role="menu">
+	                            	<form id="edit-node-form" data-parsley-validate="data-parsley-validate">
+		                            	<div class="col-lg-12 filter-option">
+					                        <label class="control-label col-lg-12">Nome do nó</label>
+					                        <div class="add-node-field col-lg-12">
+					                            <select name="originNodeName" required="required" class="node-name-edit form-control" >
+					                            	<option disabled="disabled" value="nodeName" selected="selected">Selecione nó</option>
+					                            </select>
+					                        </div>
+					                    </div>
+
+					                    <div class="col-lg-12 filter-option">
+					                        <label class="control-label col-lg-12">Nome do nó</label>
+					                        <div class="add-node-field col-lg-12">
+					                        	<input type="text" disabled="disabled" required="required" class="mermaid-input edited-node-name form-control" placeholder="Nome" />
+					                        </div>
+					                    </div>
+
+					                    <div class="divider col-lg-12"></div>
+
+					        			<button class="btn btn-success node-button pull-right edit-node" type="button">Editar</button>
+					        			<button class="btn btn-default cancel-node-button pull-right" type="button">Cancelar</button>
+				        			</form>
+	                            </div>
+                            </div>
+
+                            <div class="btn-group graph-button">
+                                <a data-toggle="dropdown" class="dropdown-toggle btn btn-app graph-btn">
+                                    <i class="fa fa-pencil"></i> Editar ligação
+                                </a>
+                                <div class="dropdown-menu add-node-menu pull-left" role="menu">
+	                            	<form id="edit-link-form" data-parsley-validate="data-parsley-validate">
+		                            	<div class="col-lg-12 filter-option">
+					                        <label class="control-label col-lg-12">Nó de origem</label>
+					                        <div class="add-node-field col-lg-12">
+					                            <select name="originNodeName" required="required" class="origin-node-edit-select form-control" >
+					                            	<option disabled="disabled" value="nodeName" selected="selected">Selecione nó de origem</option>
+					                            </select>
+					                        </div>
+					                    </div>
+
+					                    <div class="col-lg-12 filter-option">
+					                        <label class="control-label col-lg-12">Nó de destino</label>
+					                        <div class="add-node-field col-lg-12">
+					                            <select name="originNodeName" required="required" class="destiny-node-edit-select form-control" >
+					                            	<option disabled="disabled" value="nodeName" selected="selected">Selecione nó destino</option>
+					                            </select>
+					                        </div>
+					                    </div>
+
+					                    <div class="col-lg-12 filter-option">
+					                        <label class="control-label col-lg-12">Nota na ligação</label>
+					                        <div class="add-node-field col-lg-12">
+					                        	<input type="hidden" class="mermaid-input current-link-note form-control" placeholder="Anotação" />
+					                            <input type="text" disabled="disabled" class="mermaid-input edited-link-note form-control" placeholder="Anotação" />
+					                        </div>
+					                    </div>
+
+					                    <div class="divider col-lg-12"></div>
+
+					        			<button class="btn btn-success node-button edit-node-link pull-right" type="button">Editar</button>
+					        			<button class="btn btn-default cancel-node-button pull-right" type="button">Cancelar</button>
+	                            	</form>
+	                            </div>
+                            </div>
+
+                            <div class="btn-group graph-button">
+                                <a data-toggle="dropdown" class="dropdown-toggle btn btn-app graph-btn">
+                                    <i class="fa fa-minus-square text-danger"></i>
+                                    Remover nó
+                                </a>
+                                <div class="dropdown-menu add-node-menu pull-left" role="menu">
+	                            	<form id="remove-node-form" data-parsley-validate="data-parsley-validate">
+		                            	<div class="col-lg-12 filter-option">
+					                        <label class="control-label col-lg-12">Nome do nó</label>
+					                        <div class="add-node-field col-lg-12">
+					                            <select name="originNodeName" required="required" class="node-name-remove form-control" >
+					                            	<option disabled="disabled" value="nodeName" selected="selected">Selecione nó</option>
+					                            </select>
+					                        </div>
+					                    </div>
+
+					                    <div class="divider col-lg-12"></div>
+
+					        			<button class="btn btn-danger node-button pull-right remove-node" type="button">Remover</button>
+					        			<button class="btn btn-default cancel-node-button pull-right" type="button">Cancelar</button>
+				        			</form>
+	                            </div>
+                            </div>
+
+                            <div class="btn-group graph-button">
+                                <a data-toggle="dropdown" class="dropdown-toggle btn btn-app graph-btn">
+                                    <i class="fa fa-expand text-danger"></i>
+                                    Remover ligação
+                                </a>
+                                <div class="dropdown-menu add-node-menu pull-left" role="menu">
+	                            	<form id="remove-link-form" data-parsley-validate="data-parsley-validate">
+		                            	<div class="col-lg-12 filter-option">
+					                        <label class="control-label col-lg-12">Entre nó de origem</label>
+					                        <div class="add-node-field col-lg-12">
+					                            <select name="originNodeName" required="required" class="origin-node-select-remove form-control" >
+					                            	<option disabled="disabled" value="nodeName" selected="selected">Selecione nó de origem</option>
+					                            </select>
+					                        </div>
+					                    </div>
+
+					                    <div class="col-lg-12 filter-option">
+					                        <label class="control-label col-lg-12">Entre nó de destino</label>
+					                        <div class="add-node-field col-lg-12">
+					                            <select name="originNodeName" required="required" class="destiny-node-select-remove form-control" >
+					                            	<option disabled="disabled" value="nodeName" selected="selected">Selecione nó destino</option>
+					                            </select>
+					                        </div>
+					                    </div>
+
+					                    <div class="divider col-lg-12"></div>
+
+					        			<button class="btn btn-danger node-button remove-node-link pull-right" type="button">Remover</button>
+					        			<button class="btn btn-default cancel-node-button pull-right" type="button">Cancelar</button>
+	                            	</form>
+	                            </div>
+                        	</div>
+
+                        	<div th:if="${workflowDTO.currentModelFile != null}" class="pull-right generate-graph-button">
+									<button id="generate-graph-button" class="btn btn-success" type="button">Gerar grafo a partir de arquivo modelo atual</button>
+                        	</div>
+
+		                </div>
+
+		                <div class="clearfix"></div>
+
+						<div id="graph-container" class="mermaid static-graph"></div>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                </div>
+            </div>
+        </div>
+
+        <div th:replace="fragments/graph/generate-graph-modal"></div>
+    </div>
+</div>

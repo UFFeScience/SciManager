@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+										   xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+	<head th:replace="fragments/base-layout :: common_header(~{::title}, ~{})">
+		<title>SciManager - UFF</title>
+	</head>
+	<body class="nav-md">
+
+		<div class="container body">
+	        <div class="main_container">
+
+	        	<div th:replace="fragments/left-col"></div>
+	        	<div th:replace="fragments/top-nav"></div>
+
+	        	<!-- page content -->
+	            <div class="right_col" role="main">
+
+	            	<!-- page body -->
+	            	<div class="page-main-content">
+	            		<div th:replace="fragments/workflow/workflow-execution-metadata-fragment"></div>
+	            	</div>
+	            	<!-- /page body -->
+
+		            <div th:replace="fragments/footer"></div>
+	            </div>
+	            <!-- /page content -->
+
+	        </div>
+	    </div>
+
+		<th:block th:replace="fragments/base-layout :: common_scripts(~{::script})">
+			<!-- notification -->
+			<script th:src="@{/resources/js/notify/pnotify.core.js}"></script>
+			<script th:src="@{/resources/js/notify/pnotify.buttons.js}"></script>
+			<script th:src="@{/resources/js/notify/pnotify.nonblock.js}"></script>
+
+			<!-- validator -->
+			<script th:src="@{/resources/js/validator/validator.js}"></script>
+
+			<!-- custom view js -->
+			<script th:src="@{/resources/js/custom-view-js/sci-manager.commons.js}"></script>
+			<script th:src="@{/resources/js/custom-view-js/notifications.commons.js}"></script>
+			<script th:src="@{/resources/js/custom-view-js/async-data.commons.js}"></script>
+			<script th:src="@{/resources/js/custom-view-js/filter-search.commons.js}"></script>
+			<script th:src="@{/resources/js/custom-view-js/popover.commons.js}"></script>
+
+			<script th:src="@{/resources/js/custom-view-js/workflow-metadata.js}"></script>
+		</th:block>
+	</body>
+</html>

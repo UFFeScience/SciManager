@@ -1,0 +1,160 @@
+<!-- page body -->
+<div class="page-main-content">
+	<div class="page-title">
+		<div class="no-pad-left title_left title-large col-md-12 col-sm-12 col-xs-12">
+			<div class="no-pad-left col-md-12 col-sm-12 col-xs-12">
+				<h2>
+					<small>Workflow</small>
+					<span>Dados de proveniência</span>
+				</h2>
+				<ol th:if="${workflowDTO != null}" class="no-pad-left breadcrumb">
+					<li class="breadcrumb-item"><a th:href="@{/scientific-project/all-scientific-projects(page=1, myOwn=true)}">Projetos científicos</a></li>
+					<li class="breadcrumb-item"><a th:href="@{|/scientific-experiment/${workflowDTO.scientificExperiment.scientificExperimentId}/experiment-details|}" th:text="${workflowDTO.scientificExperiment.experimentName}">[..]</a></li>
+					<li class="breadcrumb-item"><a th:href="@{|/workflow/${workflowDTO.workflowId}/workflow-details|}" th:text="|${workflowDTO.workflowName}|">[..]</a></li>
+					<li class="breadcrumb-item active">Dados de proveniência</li>
+				</ol>
+
+				<div th:if="${workflowDTO != null and workflowExecutionId != null and totalMetadata != null}" class="col-md-12 col-sm-12 col-xs-12 refresh-data hide">
+					<input type="hidden" id="workflow-id" th:value="${workflowDTO.workflowId}" />
+					<input type="hidden" id="execution-id" th:value="${workflowExecutionId}" />
+					<input type="hidden" id="current-total-metadata" th:value="${totalMetadata}" />
+
+					<a class="btn btn-default" th:href="|../../${workflowDTO.workflowId}/execution-details/${workflowExecutionId}|">
+						<i data-toggle="tooltip" data-placement="top" title="Recarregar página" class="fa fa fa-refresh"></i>
+					</a>
+					Há atualizações nos dados da execução, recarregue a página.
+				</div>
+
+				<input id="search-url" type="hidden" name="searchUrl" th:value="${searchListUrl}" />
+			</div>
+		</div>
+
+		<div th:replace="fragments/pagination"></div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	<div class="row loaded-content">
+
+		<div class="col-md-12 sci-manager-data-table-container">
+			<div class="x_panel">
+				<div class="x_content">
+
+					<div class="row">
+
+						<div class="clearfix"></div>
+
+						<!-- start workflow list -->
+						<div class="table-container">
+							<table class="table default-sci-table">
+								<thead>
+									<tr>
+										<th>ExecTag</th>
+										<th>Tag</th>
+										<th>Workspace</th>
+										<th>Status</th>
+										<th>Data de início</th>
+										<th>Data de fim</th>
+										<th>Nº de processadores</th>
+										<th>Endereço IP</th>
+										<th>Hostname</th>
+										<th>Tipo máquina</th>
+										<th>Custo financeiro</th>
+										<th>Falhas / Tentativas</th>
+									</tr>
+								</thead>
+								<tbody>
+									<th:block th:each="executionMetadata : ${workflowExecutionsMetadata}">
+										<tr>
+											<td>
+												<a th:text="${executionMetadata.execTag}">[..]</a>
+												<br />
+											</td>
+											<td>
+												<a th:text="${executionMetadata.tag}">[..]</a>
+												<br />
+											</td>
+											<td>
+												<a th:text="${executionMetadata.workspace}">[..]</a>
+												<br />
+											</td>
+											<td>
+												<div th:if="${T(com.uff.scimanager.domain.swfms.scicumulus.SciCumulusExecutionStatus).RUNNING == executionMetadata.status}" class="progress-text">
+													<a th:text="${executionMetadata.status.executionStatusDetail}">[..]</a>
+													<i class="fa fa-refresh fa-spin"></i>
+												</div>
+												<div th:if="${T(com.uff.scimanager.domain.swfms.scicumulus.SciCumulusExecutionStatus).READY == executionMetadata.status}" class="ready-text">
+													<a th:text="${executionMetadata.status.executionStatusDetail}">[..]</a>
+													<i class="fa fa-check"></i>
+												</div>
+												<div th:if="${T(com.uff.scimanager.domain.swfms.scicumulus.SciCumulusExecutionStatus).FINISHED == executionMetadata.status}" class="success-text">
+													<a th:text="${executionMetadata.status.executionStatusDetail}">[..]</a>
+													<i class="fa fa-check-circle-o"></i>
+												</div>
+												<div th:if="${T(com.uff.scimanager.domain.swfms.scicumulus.SciCumulusExecutionStatus).BLOCKED == executionMetadata.status}" class="blocked-text">
+													<a th:text="${executionMetadata.status.executionStatusDetail}">[..]</a>
+													<i class="fa fa-exclamation-triangle"></i>
+												</div>
+												<div th:if="${T(com.uff.scimanager.domain.swfms.scicumulus.SciCumulusExecutionStatus).FAILURE == executionMetadata.status}" class="failure-text">
+													<a th:text="${executionMetadata.status.executionStatusDetail}">[..]</a>
+													<i class="fa fa-times-circle-o"></i>
+												</div>
+												<br />
+											</td>
+											<td>
+												<a th:text="${executionMetadata.startTime}">[..]</a>
+												<br />
+											</td>
+											<td>
+												<a th:text="${executionMetadata.endTime}">[..]</a>
+												<br />
+											</td>
+											<td>
+												<a th:text="${executionMetadata.processors}">[..]</a>
+												<br />
+											</td>
+											<td>
+												<a th:text="${executionMetadata.address}">[..]</a>
+												<br />
+											</td>
+											<td>
+												<a th:text="${executionMetadata.machineType}">[..]</a>
+												<br />
+											</td>
+											<td>
+												<a th:text="${executionMetadata.hostname}">[..]</a>
+												<br />
+											</td>
+											<td>
+												<a th:text="${executionMetadata.financialCost}">[..]</a>
+												<br />
+											</td>
+											<td>
+												<a th:text="${executionMetadata.failureTries}">[..]</a>
+												<br />
+											</td>
+										</tr>
+									</th:block>
+								</tbody>
+							</table>
+						</div>
+						<!-- end workflow list -->
+
+						<div class="alert-no-content alert alert-info alert-dismissible" role="alert" th:if="${workflowExecutionsMetadata != null and workflowExecutionsMetadata.isEmpty()}">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+							</button>
+							Nenhum dado de proveniência encontrado
+						</div>
+
+						<div class="loading-data-async">
+	           				<i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+	           			</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<div th:replace="fragments/pagination"></div>
+	</div>
+</div>
+<!-- /page body -->

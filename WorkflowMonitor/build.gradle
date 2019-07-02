@@ -1,0 +1,71 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath('org.springframework.boot:spring-boot-gradle-plugin:1.2.6.RELEASE') 
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse-wtp'
+apply plugin: 'idea' 
+apply plugin: 'spring-boot' 
+
+springBoot {
+    mainClass = 'com.uff.workflow.monitor.WorkflowMonitorApplication'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+	//spring
+	compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-actuator')
+    compile('org.springframework.boot:spring-boot-starter-data-rest')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    
+    //database
+    runtime('org.hsqldb:hsqldb')
+    compile('com.h2database:h2:1.4.182')
+    runtime('org.postgresql:postgresql:9.4-1201-jdbc41')
+    compile('org.hibernate:hibernate-core:4.3.6.Final')
+    compile('javax.el:javax.el-api:3.0.0')
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    
+    //rabbitMq
+    compile('org.springframework.boot:spring-boot-starter-amqp')
+    
+	//commons
+    compile('commons-io:commons-io:2.4')
+    compile('commons-logging:commons-logging:1.1.1')
+    compile('org.apache.commons:commons-lang3:3.3.2')
+    compile('org.apache.commons:commons-dbcp2:2.0.1')
+    
+    //util
+    compile('com.jcabi:jcabi-manifests:1.0.4') 
+    compile('com.google.code.gson:gson:2.3')
+    compile('org.json:json:20151123')
+    compile fileTree(dir: 'intranet-libs', include: '*.jar')
+    testCompile('com.jayway.jsonpath:json-path:0.9.1')
+    
+    //test
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-core'
+    testCompile 'org.hamcrest:hamcrest-library'
+}
+
+eclipse {
+    classpath {
+         containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.9'
+}

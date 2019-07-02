@@ -1,0 +1,17 @@
+ <!-- Letters filter content -->
+<ul class="pagination pagination-split filter-letters" th:with="letter=${filter.getFieldValue('letter')}, queryString=${filter.getFieldValue('search')}">
+
+	<li th:class="${letter == null} ? active">
+ 	<th:block th:switch="${queryString != null} ? ${true} : ${false}">
+ 		<a th:case="${true}" class="filter-all" th:href="@{/user/all-users/(page=1, search=${queryString})}">Todos</a>
+ 		<a th:case="${false}" class="filter-all" th:href="@{/user/all-users/(page=1)}">Todos</a>
+ 	</th:block>
+    </li>
+	<li th:class="${letterEnum.name().equalsIgnoreCase(letter)} ? active" th:each="letterEnum : ${T(com.uff.scimanager.component.LetterFilter).values()}">
+		<th:block th:switch="${queryString != null} ? ${true} : ${false}">
+			<a th:case="${true}" th:href="@{/user/all-users/(page=1, letter=${letterEnum.name()}, search=${queryString})}" th:text="${letterEnum.name()}">[..]</a>
+			<a th:case="${false}" th:href="@{/user/all-users/(page=1, letter=${letterEnum.name()})}" th:text="${letterEnum.name()}">[..]</a>
+		</th:block>
+	</li>
+</ul>
+<!-- /Letters filter content -->

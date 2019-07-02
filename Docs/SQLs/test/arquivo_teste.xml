@@ -1,0 +1,39 @@
+<SciCumulus>
+	<environment type="LOCAL" verbose="false"/>
+	<constraint workflow_exectag="workflow-alfatime" cores="4"/>
+	<workspace workflow_dir="/Users/vitor/Documents/Repository/SciCumulus/SciCumulus-Vitor/workflows/workflow-splitmap"/>
+	<database name="scc2" username="scc2" password="scc2" port="5432" server="localhost"/>
+	<conceptualWorkflow tag="workflow-splitmap" description="">
+		<activity tag="act1" description="" type="SPLIT_MAP" activation="./experiment.cmd" template="%=WFDIR%/template_act1">
+			<relation reltype="Input" name="IAct1"/>
+			<relation reltype="Output" name="OAct1" />
+			<extractor name="rdi1" type="INDEXING" cartridge="CSV" search="file-1"/>
+			<extractor name="dl1" type="LOADING" cartridge="EXTERNAL_PROGRAM" invocation="./extractor.cmd"/>
+			<field name="IDENT" type="float" input="IAct1" output="OAct1" decimalplaces="0"/>
+			<field name="FILE1" type="file" input="IAct1" output="OAct1" operation="COPY"/>
+			<field name="FILE2" type="file" input="IAct1" output="OAct1" operation="COPY"/>
+			<field name="KA" type="float" output="OAct1" decimalplaces="0" extractor="rdi1"/>
+			<field name="TAB" type="float" output="OAct1" decimalplaces="0" extractor="rdi1"/>
+			<field name="TBF" type="float" output="OAct1" decimalplaces="0" extractor="rdi1"/>
+			<field name="TCR" type="float" output="OAct1" decimalplaces="0" extractor="rdi1"/>
+			<field name="TDE" type="float" output="OAct1" decimalplaces="0" extractor="dl1"/>
+			<field name="TE" type="float" output="OAct1" decimalplaces="0" extractor="dl1"/>
+			<field name="TF" type="float" output="OAct1" decimalplaces="0" extractor="dl1"/>
+			<join inner="rdi1" outer="dl1" fields="K"/>
+    	</activity>
+		<activity tag="act2" description="" type="MAP" activation="./experiment.cmd" template="%=WFDIR%/template_act2">
+			<relation reltype="Input" name="IAct2" dependency="act1"/>
+			<relation reltype="Output" name="OAct2" />
+			<field name="IDENT" type="float" output="OAct2" decimalplaces="0"/>
+			<field name="FILE1" type="file" operation="MOVE"/>
+			<field name="FILE2" type="file" operation="MOVE"/>
+			<field name="K" type="float" output="OAct2" decimalplaces="0"/>
+			<field name="TA" type="float" output="OAct2" decimalplaces="0"/>
+			<field name="TB" type="float" output="OAct2" decimalplaces="0"/>
+			<field name="TD" type="float" output="OAct2" decimalplaces="0"/>
+    	</activity>
+	</conceptualWorkflow>
+	<executionWorkflow tag="workflow-splitmap" execmodel="DYN_FAF" expdir="%=WFDIR%/exp">
+		<relation name="IAct1" filename="input.dataset"/>
+	</executionWorkflow>
+</SciCumulus>

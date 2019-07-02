@@ -1,0 +1,28 @@
+<!-- Remove model file modal -->
+<div class="modal fade bs-remove-model-file-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+   	<div class="modal-dialog modal-md">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="deleteModelFileLabel">Deseja mesmo remover o arquivo modelo?</h4>
+                <h4 class="modal-title hide" id="canNotDeleteModelFileLabel">Não será possível excluir o arquivo modelo, pois o mesmo já está associado a uma execução de uma versão do workflow.</h4>
+            </div>
+            <div class="modal-footer">
+            	<form method="post" id="remove-model-file-form" class="form-horizontal form-label-left" th:novalidate="true" role="form" th:action="@{/workflow/model-file/remove-model-file}">
+	            	<input id="authorization-token" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+	            	<input id="remove-model-file-id" type="hidden" name="modelFileId" />
+	                   
+	                <button type="button" class="btn btn-default cancel-button" data-dismiss="modal">Cancelar</button>
+	                <button id="delete-model-file-button" type="button" data-dismiss="modal" class="action-button btn btn-success">
+	                	<span class="action-text">Confirmar</span>
+	                	<i class="fa fa-spinner loading-action hide fa-pulse fa-2x fa-fw"></i>
+	                </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- /Remove model file modal -->

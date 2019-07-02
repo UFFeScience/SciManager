@@ -1,0 +1,79 @@
+<!-- Cropping modal -->
+<div id="avatar-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+   	<div class="modal-dialog modal-lg">
+        <div class="modal-content">
+			<form method="post" id="upload-image-form" class="form-horizontal form-label-left" th:novalidate="true" role="form" th:action="@{/user/upload-image}">
+				<input type="hidden" name="userId" th:value="${user.userId}"/>
+				<input id="user-image-upload" type="hidden" name="imageString"/>
+			</form>
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="createUserLabel">Carregar imagem de perfil</h4>
+            </div>
+            <div class="modal-body">
+           		<div class="avatar-body">
+	            	<!-- Upload image and data -->
+	                <div class="avatar-upload">
+	                    <input class="avatar-src" name="avatar_src" type="hidden" />
+	                    <input class="avatar-data" name="avatar_data" type="hidden" />
+	                    <label title="Upload image file" for="inputImage" class="btn btn-primary">
+                            <input type="file" accept="image/*" name="file" id="inputImage" class="hide" />
+                        	Carregar imagem
+                    	</label>
+	                </div>
+
+	                <!-- Crop and preview -->
+	                <div class="row">
+					<div class="col-md-9">
+	                    <div class="img-container avatar-wrapper">
+                        	<img src="" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="img-preview preview-lg"></div>
+                            <div class="img-preview preview-md"></div>
+                            <div class="img-preview preview-sm"></div>
+                            <div class="img-preview preview-xs"></div>
+                    	</div>
+                	</div>
+
+	                <div class="row avatar-btns">
+	                    <div class="col-md-9">
+	                        <div class="btn-group">
+                        		<button class="btn btn-primary" data-method="zoom" data-option="0.1" type="button" title="Zoom In">
+									<span class="docs-tooltip" data-toggle="tooltip" title="Aproximar imagem">
+	                                	<span class="fa fa-search-plus"></span>
+	                                </span>
+                                </button>
+                                <button class="btn btn-primary" data-method="zoom" data-option="-0.1" type="button" title="Zoom Out">
+                                    <span class="docs-tooltip" data-toggle="tooltip" title="Afastar imagem">
+                                    	<span class="fa fa-search-minus"></span>
+                                    </span>
+                                </button>
+	                            <button class="btn btn-primary" data-method="rotate" data-option="-45" type="button" title="Rotate Left">
+	                            	<span class="docs-tooltip" data-toggle="tooltip" title="Rotacionar para a esquerda">
+	                                   <span class="fa fa-rotate-left"></span>
+	                                 </span>
+                                </button>
+                            	<button class="btn btn-primary" data-method="rotate" data-option="45" type="button" title="Rotate Right">
+	                                 <span class="docs-tooltip" data-toggle="tooltip" title="Rotacionar para direita">
+	                                 	<span class="fa fa-rotate-right"></span>
+	                                 </span>
+                                </button>
+                             </div>
+	                    </div>
+	                    <div class="col-md-3">
+	                        <button data-method="getDataURL" class="action-button btn btn-success btn-block avatar-save" type="submit">
+			                	<span class="action-text">Salvar imagem</span>
+			                	<i class="fa fa-spinner loading-action hide fa-pulse fa-2x fa-fw"></i>
+			                </button>
+	                    </div>
+	            	</div>
+	        	</div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Cropping modal -->

@@ -1,0 +1,83 @@
+<!-- page body -->
+<div class="page-main-content">
+	<div class="row loaded-content">
+		<div class="col-md-12 sci-manager-data-table-container">
+			<div class="x_panel">
+				<div class="x_content">
+
+					<div class="row">
+
+						<div class="col-md-12 col-sm-12 col-xs-12 no-pad-left no-pad-right">
+							<div class="no-pad-left col-md-6 col-sm-6 col-xs-6">
+								<div th:if="${(headerData != null and headerData.currentUser != null and headerData.currentUser.userRole != T(com.uff.scimanager.domain.Role).USER) or (scientificProjectDTO != null and scientificProjectDTO.isEditablebyUser == true)}" class="pull-left">
+									<input th:if="${scientificProjectDTO != null}" th:id="scientific-project-id" type="hidden" th:value="${scientificProjectDTO.scientificProjectId}" class="form-control col-md-7 col-xs-12" />
+									<button id="create-phase-button" type="button" class="btn btn-success" data-toggle="modal" data-target=".bs-create-phase-modal-lg">Criar fase <i class="fa fa-plus"></i></button>
+								</div>
+
+								<div class="clearfix"></div>
+
+								<div th:replace="fragments/search-filter"></div>
+							</div>
+
+							<div class="col-md-6 col-sm-6 pull-right col-xs-6 no-pad-right">
+								<form th:replace="fragments/search"></form>
+							</div>
+						</div>
+
+						<div class="clearfix"></div>
+
+						<!-- start phase list -->
+						<div class="table-container">
+							<table class="table default-sci-table">
+								<thead>
+									<tr>
+										<th>Nome da fase</th>
+										<th>Habilita execução de SGWfC</th>
+										<th th:if="${(headerData != null and headerData.currentUser != null and headerData.currentUser.userRole != T(com.uff.scimanager.domain.Role).USER) or (scientificProjectDTO != null and scientificProjectDTO.isEditablebyUser == true)}" style="width: 25%"></th>
+									</tr>
+								</thead>
+								<tbody>
+									<th:block th:each="phase : ${phaseDTOs}">
+										<tr th:id="|phase-row-${phase.phaseId}|">
+											<td>
+												<a th:id="|phase-name-${phase.phaseId}|" th:text="${phase.phaseName}">[..]</a>
+												<br />
+											</td>
+											<td>
+												<span th:id="|allow-execution-label-${phase.phaseId}|" th:if="${phase.allowExecution == true}" th:text="Sim"></span>
+												<span th:id="|allow-execution-label-${phase.phaseId}|" th:if="${phase.allowExecution == false}" th:text="Não"></span>
+												<input th:id="|allow-execution-value-${phase.phaseId}|" type="hidden" th:value="${phase.allowExecution}" />
+											</td>
+											<td th:if="${(headerData != null and headerData.currentUser != null and headerData.currentUser.userRole != T(com.uff.scimanager.domain.Role).USER) or (scientificProjectDTO != null and scientificProjectDTO.isEditablebyUser == true)}" class="actions">
+												<a th:if="${(headerData != null and headerData.currentUser != null and headerData.currentUser.userRole != T(com.uff.scimanager.domain.Role).USER) or (scientificProjectDTO != null and scientificProjectDTO.isEditablebyUser == true)}" data-toggle="modal" data-target=".bs-edit-phase-modal-lg" th:id="|edit-phase-${phase.phaseId}|" class="edit-phase btn btn-default btn-xs edit-phase">
+													<i data-toggle="tooltip" data-placement="top" title="Editar fase" class="fa fa-pencil"></i>
+												</a>
+												<a th:if="${headerData != null and headerData.currentUser != null and headerData.currentUser.userRole != T(com.uff.scimanager.domain.Role).USER}" th:id="|remove-phase-${phase.phaseId}|" data-toggle="modal" data-target=".bs-remove-phase-modal-lg" type="button" class="remove-phase-button btn btn-default btn-xs">
+													<i data-toggle="tooltip" data-placement="top" title="Deletar" class="fa red fa-trash-o"></i>
+												</a>
+											</td>
+										</tr>
+									</th:block>
+								</tbody>
+							</table>
+						</div>
+						<!-- end phase list -->
+
+						<div class="alert-no-content alert alert-info alert-dismissible" role="alert" th:if="${phaseDTOs!= null and phaseDTOs.isEmpty()}">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+							</button>
+							Nenhuma fase encontrada
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<div th:replace="fragments/pagination"></div>
+
+		<div th:replace="fragments/phase/create-phase-modal"></div>
+		<div th:replace="fragments/phase/edit-phase-modal"></div>
+		<div th:replace="fragments/phase/remove-phase-modal"></div>
+	</div>
+</div>
+<!-- /page body -->

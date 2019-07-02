@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+	<head th:fragment="common_header(title, links)">
+	    <meta http-equiv="Content-Type" content="text/plain; charset=UTF-8" />
+	    <!-- Meta, title, CSS, favicons, etc. -->
+	    <meta charset="utf-8" />
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	    <!-- security headers -->
+	    <meta name="_csrf" th:content="${_csrf.token}"/>
+		<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+	    <title th:replace="${title}">[..]</title>
+
+	    <!-- Bootstrap core CSS -->
+	    <link th:href="@{/resources/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
+	    <link th:href="@{/resources/fonts/css/font-awesome.min.css}" rel="stylesheet" type="text/css" />
+	    <link th:href="@{/resources/css/animate.min.css}" rel="stylesheet" type="text/css" />
+
+		<th:block th:replace="${links}" />
+
+		<!-- Custom styling plus plugins -->
+	    <link th:href="@{/resources/css/custom.css}" rel="stylesheet" type="text/css" />
+	    <link th:href="@{/resources/css/sci-manager.css}" rel="stylesheet" type="text/css" />
+
+	    <link rel="icon" th:src="@{/resources/images/favicon.ico?v=2}" type="image/x-icon" />
+		<link rel="shortcut icon" th:src="@{/resources/images/favicon.ico?v=2}" type="image/x-icon" />
+	</head>
+	<body class="nav-md">
+
+		<th:block th:fragment="common_scripts(scripts)">
+			<!-- jQuery -->
+		    <script th:src="@{/resources/js/jquery.min.js}"></script>
+
+			<!-- bootstrap js -->
+			<script th:src="@{/resources/js/bootstrap.min.js}"></script>
+
+			<!-- custom theme js -->
+			<script th:src="@{/resources/js/custom.js}"></script>
+
+		    <!--[if lt IE 9]>
+		    	<script src="../assets/js/ie8-responsive-file-warning.js"></script>
+		    <![endif]-->
+
+		    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		    <!--[if lt IE 9]>
+				<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+				<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		    <![endif]-->
+
+			<!-- validator -->
+			<script th:src="@{/resources/js/validator/validator.js}"></script>
+
+			<th:block th:replace="${scripts}" />
+		</th:block>
+
+	</body>
+</html>

@@ -1,0 +1,28 @@
+<!-- Remove phase modal -->
+<div class="modal fade bs-remove-phase-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+   	<div class="modal-dialog modal-md">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="deletePhaseLabel">Deseja mesmo excluir a fase?</h4>
+                <h4 class="modal-title hide" id="canNotDeletePhaseLabel">Não será possível excluir a fase, pois a mesma está associada a <span id="dependencies-message"></span>. Desassocie a fase para poder removê-la.</h4>
+            </div>
+            <div class="modal-footer">
+            	<form method="post" id="remove-phase-form" class="form-horizontal form-label-left" th:novalidate="true" role="form" th:action="@{/scientific-project/phase/remove-phase}">
+	            	<input id="authorization-token" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+	            	<input id="remove-phase-id" type="hidden" name="phaseId" />
+
+	                <button type="button" class="btn btn-default cancel-button" data-dismiss="modal">Cancelar</button>
+	                <button id="delete-phase-button" type="button" data-dismiss="modal" class="action-button btn btn-success">
+	                	<span class="action-text">Confirmar</span>
+	                	<i class="fa fa-spinner loading-action hide fa-pulse fa-2x fa-fw"></i>
+	                </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- /Remove phase modal -->

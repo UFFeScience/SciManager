@@ -1,0 +1,50 @@
+<!-- Edit phase modal -->
+<div class="modal fade bs-edit-phase-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+   	<div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="editPhaseLabel">Editar fase</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post" id="edit-phase-form" class="form-horizontal form-label-left" th:novalidate="true" role="form" th:action="@{/scientific-project/phase/edit-phase}">
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="phase-name">Nome da fase <span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                        	<input id="edit-phase-id" type="hidden" name="phaseId" value="" />
+                            <input id="edit-phase-name" type="text" name="phaseName" data-validate-length-range="1,70" th:required="true" placeholder="Fase" class="form-control col-md-7 col-xs-12" />
+                        	<input id="edit-project-id" type="hidden" name="scientificProjectId" th:value="${scientificProjectDTO.scientificProjectId}" class="form-control col-md-7 col-xs-12" />
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Habilita execução de SGWfC</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div id="gender" class="btn-group" data-toggle="buttons">
+                   		        <label class="btn btn-default allow-execution-btn edit-allow-execution" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                           			<input id="edit-allow-execution-true" type="radio" name="allowExecution" value="true" /> <span>Sim</span>
+                            	</label>
+
+                            	<label class="btn btn-default allow-execution-btn edit-do-not-allow-execution" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                           			<input id="edit-allow-execution-false" type="radio" name="allowExecution" value="false" /> <span>Não</span>
+                            	</label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default cancel-button" data-dismiss="modal">Cancelar</button>
+                <button id="edit-phase-submit-button" type="button" class="action-button btn btn-success">
+                	<span class="action-text">Salvar</span>
+                	<i class="fa fa-spinner loading-action hide fa-pulse fa-2x fa-fw"></i>
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- /Edit phase modal -->

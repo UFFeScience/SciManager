@@ -1,0 +1,34 @@
+<div class="col-md-3 left_col">
+	<div class="left_col">
+
+	    <div class="navbar nav_title" style="border: 0;">
+	        <a href="/dashboard" th:href="@{/dashboard}" class="site_title scimanager-home-link"><img alt="UFF logo" th:src="@{/resources/images/uff-logo-small.png}" /> <span class="scimanager-title">SciManager</span></a>
+	    </div>
+
+	    <div class="clearfix"></div>
+	    <br />
+
+	    <!-- sidebar menu -->
+	    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+
+	        <div class="menu_section">
+	            <ul class="nav side-menu">
+	                <li><a th:href="@{/dashboard}"><i class="fa fa-dashboard"></i> Dashboard </a></li>
+	                <li><a th:href="@{/scientific-project/all-scientific-projects(page=1, myOwn=true)}"><i class="fa fa-briefcase"></i> Projetos científicos </a></li>
+	                <li th:if="${headerData.currentUser.getUserRole().roleName == T(com.uff.scimanager.domain.Role).ADMIN.roleName}"><a><i class="fa fa-lock"></i> Admin <span class="fa fa-chevron-left"></span></a>
+	                	<ul th:if="${headerData.currentUser.getUserRole().roleName == T(com.uff.scimanager.domain.Role).ADMIN.roleName}" class="nav child_menu" style="display: none">
+			                <li th:if="${headerData.currentUser.getUserRole().roleName == T(com.uff.scimanager.domain.Role).ADMIN.roleName}"><a th:href="@{/user-group/all-user-groups(page=1, myOwn=true)}">Grupos de usuários </a></li>
+			                <li th:if="${headerData.currentUser.getUserRole().roleName == T(com.uff.scimanager.domain.Role).ADMIN.roleName}"><a th:href="@{/user/all-users?page=1}">Usuários </a></li>
+			                <li th:if="${headerData.currentUser.getUserRole().roleName == T(com.uff.scimanager.domain.Role).ADMIN.roleName}"><a th:href="@{/tag/all-tags?page=1}">Tags </a></li>
+	                	</ul>
+	                </li>
+	            </ul>
+	        </div>
+	    </div>
+	    <!-- /sidebar menu -->
+
+	    <!-- /menu footer buttons -->
+        <div class="sidebar-footer hidden-small"></div>
+        <!-- /menu footer buttons -->
+    </div>
+</div>

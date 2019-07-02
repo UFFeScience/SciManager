@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" style="background-color: #2A3F54;" xmlns="http://www.w3.org/1999/xhtml"
+												   xmlns:th="http://www.thymeleaf.org"
+												   xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+	<head th:replace="fragments/base-layout :: common_header(~{::title}, ~{::link})">
+		<title>SciManager - UFF</title>
+		<!-- icheck -->
+		<link th:href="@{/resources/css/icheck/flat/green.css}" rel="stylesheet" type="text/css" />
+	</head>
+
+	<body>
+	    <div>
+	        <a class="hiddenanchor" id="toregister"></a>
+	        <a class="hiddenanchor" id="tologin"></a>
+
+	        <div id="wrapper">
+	            <div id="login" class="animate form">
+	            	<input id="application-context-path" type="hidden" th:name="applicationContext" th:value="${applicationContext}" />
+
+	                <section class="login_content">
+	                    <form id="login-form" role="form" th:action="login" method="post">
+	                        <h1>
+								<img alt="UFF logo" th:src="@{/resources/images/uff-logo-small.png}" />
+								<span class="scimanager-title"> SciManager</span>
+							</h1>
+	                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+	                        <div>
+	                            <input type="text" name="email" id="email" class="form-control" placeholder="email" th:required="true" />
+	                        </div>
+	                        <div>
+	                            <input type="password" name="password" id="password" class="form-control" placeholder="Senha" th:required="true" />
+	                        </div>
+	                        <div>
+	                            <a id="login-button" class="btn btn-success action-button submit">
+		                            <span class="action-text">Entrar</span>
+		                			<i class="fa fa-spinner loading-action hide fa-pulse fa-2x fa-fw"></i>
+	                            </a>
+
+	                            <div class="remember-me-block">
+							        <label for="remember-me">Continuar Logado </label>
+							        <input type="checkbox" name="remember-me" id="remember-me" class="flat" />
+							    </div>
+
+							    <div class="alert alert-danger alert-dismissible fade in" role="alert" th:if="${error != null}">
+	                            	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+	                                </button>
+	                                Nome de usuário ou senha incorretos.
+	                            </div>
+
+								<a class="reset_pass" th:href="@{/user/reset-password/request-password}">Esqueceu sua senha? Redefinir senha</a>
+	                        </div>
+	                        <div class="clearfix"></div>
+	                        <div class="separator">
+	                            <div class="clearfix"></div>
+	                            <br />
+	                        </div>
+	                    </form>
+	                    <!-- form -->
+	                </section>
+	                <!-- content -->
+	            </div>
+	        </div>
+	    </div>
+
+		<th:block th:replace="fragments/base-layout :: common_scripts(~{::script})">
+			<!-- icheck -->
+			<script th:src="@{/resources/js/icheck/icheck.min.js}"></script>
+
+			<!-- validator -->
+			<script th:src="@{/resources/js/validator/validator.js}"></script>
+
+			<!-- custom view js -->
+			<script th:src="@{/resources/js/custom-view-js/sci-manager.commons.js}"></script>
+
+			<script th:src="@{/resources/js/custom-view-js/auth.js}"></script>
+		</th:block>
+	</body>
+
+</html>

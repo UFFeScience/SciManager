@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+										   xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+	<head th:replace="fragments/base-layout :: common_header(~{::title}, ~{::link})">
+		<title>SciManager - UFF</title>
+
+		<!-- chosen -->
+		<link th:href="@{/resources/css/chosen/chosen.min.css}" rel="stylesheet" type="text/css" />
+
+		<!-- summernote -->
+		<link th:href="@{/resources/css/summernote/summernote.css}" rel="stylesheet" type="text/css" />
+
+		<!-- tags -->
+		<link th:href="@{/resources/css/jqueryui/jquery-ui.css}" rel="stylesheet" type="text/css" />
+		<link th:href="@{/resources/css/tags/jquery.tagit.css}" rel="stylesheet" type="text/css" />
+
+		<!-- icheck -->
+		<link th:href="@{/resources/css/icheck/flat/green.css}" rel="stylesheet" type="text/css" />
+
+		<!-- c3 -->
+		<link th:href="@{/resources/css/c3/c3.min.css}" rel="stylesheet" type="text/css" />
+	</head>
+	<body class="nav-md">
+
+	    <div class="container body">
+	        <div class="main_container">
+
+	        	<div th:replace="fragments/left-col"></div>
+	        	<div th:replace="fragments/top-nav"></div>
+
+	        	<!-- page content -->
+	            <div class="right_col" role="main">
+
+	            	<!-- page body -->
+	            	<div class="page-main-content">
+	            		<div class="page-title">
+				            <div class="no-pad-left full-width title_left col-md-12 col-sm-12 col-xs-12">
+				            	<div class="no-pad-left col-md-12 col-sm-12 col-xs-12">
+									<h2 th:if="${scientificProjectDTO != null}" th:text="|${scientificProjectDTO.projectName}|">[..]</h2>
+									<ol th:if="${scientificProjectDTO != null}" class="no-pad-left breadcrumb">
+										<li class="breadcrumb-item"><a th:href="@{/scientific-project/all-scientific-projects(page=1, myOwn=true)}">Projetos científicos</a></li>
+									  	<li class="breadcrumb-item active" th:text="|${scientificProjectDTO.projectName}|">[..]</li>
+									</ol>
+				            	</div>
+				            </div>
+				        </div>
+						<div class="sub-menu">
+							<ul class="tabs-menu">
+								<li class="project-dashboard active"><a>Dashboard</a></li>
+								<li class="project-documentation"><a>Documentação</a></li>
+								<li class="project-experiments"><a>Experimentos</a></li>
+								<li th:if="${(headerData != null and headerData.currentUser.getUserRole().roleName == T(com.uff.scimanager.domain.Role).ADMIN.roleName) or (scientificProjectDTO != null and scientificProjectDTO.isEditablebyUser == true)}" class="project-phases"><a>Fases</a></li>
+								<li th:if="${scientificProjectDTO != null and scientificProjectDTO.isEditablebyUser == true}" class="project-board"><a>Quadro de tarefas</a></li>
+								<li th:if="${scientificProjectDTO != null and scientificProjectDTO.isEditablebyUser == true}" class="project-tasks"><a>Lista de tarefas</a></li>
+						    </ul>
+						</div>
+
+						<div class="clearfix"></div>
+
+						<div class="tab-container">
+							<!-- tabs urls -->
+							<input id="search-dashboard-tab-url" type="hidden" name="searchUrl" th:value="${searchDashboardTabUrl}" />
+							<input id="search-experiments-tab-url" type="hidden" name="searchUrl" th:value="${searchExperimentsTabUrl}" />
+							<input id="search-phases-tab-url" type="hidden" name="searchUrl" th:value="${searchPhasesTabUrl}" />
+							<input id="search-project-documentation-tab-url" type="hidden" name="searchUrl" th:value="${searchDocumentationTabUrl}" />
+							<input id="search-task-board-tab-url" type="hidden" name="searchUrl" th:value="${searchTaskBoardTabUrl}" />
+							<input id="search-tasks-list-tab-url" type="hidden" name="searchUrl" th:value="${searchTaskListTabUrl}" />
+							<!-- end of tabs urls -->
+
+							<div class="tab-content"></div>
+
+							<div class="loading-data-async loading-tab">
+		           				<i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+		           			</div>
+
+						</div>
+
+	            	</div>
+	            	<!-- /page body -->
+
+		            <div th:replace="fragments/footer"></div>
+	            </div>
+	            <!-- /page content -->
+
+	        </div>
+	    </div>
+
+		<th:block th:replace="fragments/base-layout :: common_scripts(~{::script})">
+			<script>
+				/* Handle jQuery plugin naming conflict between jQuery UI and Bootstrap */
+				var _tooltip = jQuery.fn.tooltip;
+			</script>
+			<!--  jquery ui -->
+			<script th:src="@{/resources/js/jquery-ui-1.10.4.min.js}"></script>
+
+			<script>
+				/* Handle jQuery plugin naming conflict between jQuery UI and Bootstrap */
+				jQuery.fn.tooltip = _tooltip;
+			</script>
+
+			<!-- notification -->
+			<script th:src="@{/resources/js/notify/pnotify.core.js}"></script>
+			<script th:src="@{/resources/js/notify/pnotify.buttons.js}"></script>
+			<script th:src="@{/resources/js/notify/pnotify.nonblock.js}"></script>
+
+			<!-- chosen -->
+			<script th:src="@{/resources/js/chosen/chosen.jquery.min.js}"></script>
+
+			<!-- summernote -->
+			<script th:src="@{/resources/js/summernote/summernote.min.js}"></script>
+
+			<!--  datepicker -->
+		    <script th:src="@{/resources/js/moment.min2.js}"></script>
+		    <script th:src="@{/resources/js/datepicker/daterangepicker.js}"></script>
+
+		    <!-- mask -->
+		    <script th:src="@{/resources/js/mask/jquery.mask.js}"></script>
+
+			<!-- icheck -->
+			<script th:src="@{/resources/js/icheck/icheck.min.js}"></script>
+
+			<!-- c3/d3 -->
+		    <script th:src="@{/resources/js/d3/d3.min.js}"></script>
+		    <script th:src="@{/resources/js/c3/c3.min.js}"></script>
+
+			<!-- tags -->
+		   <script th:src="@{/resources/js/tags/tag-it.min.js}"></script>
+
+			<!-- custom view js -->
+			<script th:src="@{/resources/js/custom-view-js/sci-manager.commons.js}"></script>
+			<script th:src="@{/resources/js/custom-view-js/notifications.commons.js}"></script>
+			<script th:src="@{/resources/js/custom-view-js/async-data.commons.js}"></script>
+			<script th:src="@{/resources/js/custom-view-js/filter-search.commons.js}"></script>
+			<script th:src="@{/resources/js/custom-view-js/popover.commons.js}"></script>
+
+			<script th:src="@{/resources/js/custom-view-js/scientific-project.commons.js}"></script>
+			<script th:src="@{/resources/js/custom-view-js/project-dashboard.js}"></script>
+			<script th:src="@{/resources/js/custom-view-js/project-documentation.js}"></script>
+			<script th:src="@{/resources/js/custom-view-js/scientific-experiment.js}"></script>
+			<script th:src="@{/resources/js/custom-view-js/phase.js}"></script>
+			<script th:src="@{/resources/js/custom-view-js/tasks.commons.js}"></script>
+			<script th:src="@{/resources/js/custom-view-js/task-list.js}"></script>
+			<script th:src="@{/resources/js/custom-view-js/task-board.js}"></script>
+
+			<script th:src="@{/resources/js/custom-view-js/project-details.js}"></script>
+		</th:block>
+
+	</body>
+</html>

@@ -1,0 +1,125 @@
+<!-- page body -->
+<div class="page-main-content">
+	<div class="row loaded-content">
+		<div class="col-md-12 sci-manager-data-table-container">
+			<div class="x_panel">
+				<div class="x_content">
+
+					<div class="row">
+
+						<div class="clearfix"></div>
+						<input id="search-execution-history-url" type="hidden" name="searchUrl" th:value="${searchWorkflowExecutionListUrl}" />
+
+						<!-- start workflow execution history list -->
+						<div class="table-container">
+							<table class="table default-sci-table">
+								<thead>
+									<tr>
+										<th>Data de execução</th>
+										<th>ExecTag</th>
+										<th>SGWfC</th>
+										<th>Status</th>
+										<th>Versão</th>
+										<th>Responsável</th>
+										<th style="width: 20%"></th>
+									</tr>
+								</thead>
+								<tbody>
+									<th:block th:each="workflowExecution : ${workflowExecutionHistory}">
+										<tr th:id="|workflow-execution-${workflowExecution.workflowExecutionId}|">
+											<td>
+												<a th:text="${workflowExecution.executionDate}">[..]</a>
+												<input th:id="|model-file-content-${workflowExecution.workflowExecutionId}|" type="hidden" th:value="${workflowExecution.modelFile.fileContent}" />
+												<input th:id="|file-uploader-name-${workflowExecution.workflowExecutionId}" type="hidden" th:value="${workflowExecution.modelFile.uploader}" />
+												<br />
+											</td>
+											<td>
+												<a th:text="${workflowExecution.execTag}">[..]</a>
+												<br />
+											</td>
+											<td>
+												<a th:text="${workflowExecution.swfms}">[..]</a>
+												<br />
+											</td>
+											<td>
+												<div th:if="${T(com.uff.scimanager.domain.WorkflowExecutionStatus).RUNNING == workflowExecution.executionStatus}" class="progress-text">
+													<a th:text="${workflowExecution.executionStatus.executionStatusName}">[..]</a>
+													<i class="fa fa-refresh fa-spin"></i>
+												</div>
+												<div th:if="${T(com.uff.scimanager.domain.WorkflowExecutionStatus).FINISHED == workflowExecution.executionStatus}" class="success-text">
+													<a th:text="${workflowExecution.executionStatus.executionStatusName}">[..]</a>
+													<i class="fa fa-check-circle-o"></i>
+												</div>
+												<div th:if="${T(com.uff.scimanager.domain.WorkflowExecutionStatus).FAILURE == workflowExecution.executionStatus}" class="failure-text">
+													<a th:text="${workflowExecution.executionStatus.executionStatusName}">[..]</a>
+													<i class="fa fa-times-circle-o"></i>
+
+													<div class="popover-description-head hide">
+														<span class="task-popover-title">Log de execução</span>
+													</div>
+													<div class="popover-description-content hide">
+														<div class="workflow-execution-popover-content popover-description-container col-md-12 col-sm-12 col-xs-12">
+															<p th:text="${workflowExecution.executionLog}">[..]</p> <br />
+														</div>
+													</div>
+
+													<th:block th:if="${workflowExecution.executionLog != null and workflowExecution.executionLog.length() > 0}">
+														<br />
+														Erro ao executar <span th:text="${workflowExecution.swfms}"></span>
+														<a th:id="|execution-details-button-${workflowExecution.workflowExecutionId}|" class="execution-details-button">
+															<i data-toggle="tooltip" data-placement="top" title="Ver detalhes" class="fa fa-exclamation-circle"></i>
+														</a>
+													</th:block>
+												</div>
+											</td>
+											<td>
+												<a th:text="${workflowExecution.workflowVersion}">[..]</a>
+												<br />
+											</td>
+											<td>
+												<a th:text="${workflowExecution.userAgent.email}">[..]</a>
+												<br />
+											</td>
+											<td class="actions">
+												<a th:href="@{|/workflow/${workflowExecution.workflow.workflowId}/execution-details/${workflowExecution.workflowExecutionId}|}" class="btn btn-default btn-xs">
+													<i data-toggle="tooltip" data-placement="top" title="Dados de proveniência" class="fa fa-database"></i>
+												</a>
+												<a th:id="|view-file-${workflowExecution.workflowExecutionId}|" class="btn view-file btn-default btn-xs">
+													<i data-toggle="tooltip" data-placement="top" title="Visualizar modelo" class="fa fa-file-code-o"></i>
+												</a>
+											</td>
+										</tr>
+									</th:block>
+								</tbody>
+							</table>
+						</div>
+						<!-- end workflow execution history list -->
+
+						<th:block th:if="${workflowExecutionHistory != null and workflowExecutionHistory.size() lt workflowExecutionHistoryTotal}">
+							<div class="text-center">
+								<a class="btn btn-more btn-xs pointer workflow-execution-history">
+									<i class="fa fa-search-plus"></i> Ver todas
+								</a>
+							</div>
+						</th:block>
+
+						<div class="alert-no-content alert alert-info alert-dismissible" role="alert" th:if="${workflowExecutionHistory != null and workflowExecutionHistory.isEmpty()}">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+							</button>
+							Nenhuma execução encontrada
+						</div>
+
+						<div class="loading-data-async">
+	           				<i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+	           			</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<div th:replace="fragments/pagination"></div>
+
+		<div th:replace="fragments/model-file/file-modal"></div>
+	</div>
+</div>
+<!-- /page body -->

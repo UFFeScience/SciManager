@@ -1,0 +1,27 @@
+<!-- Remove scientific project modal -->
+<div class="modal fade bs-remove-scientific-project-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+   	<div class="modal-dialog modal-md">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="deleteScientificProjectLabel">Ao excluir o projeto científico, todos os workflows, fases e tarefas associadas ao mesmo serão excluídas também, deseja mesmo excluir o projeto científico?</h4>
+            </div>
+            <div class="modal-footer">
+            	<form method="post" id="remove-scientific-project-form" class="form-horizontal form-label-left" th:novalidate="true" role="form" th:action="@{/scientific-project/remove-scientific-project}">
+	            	<input id="authorization-token" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+	            	<input id="remove-scientific-project-id" type="hidden" name="scientificProjectId" />
+
+	                <button type="button" class="btn btn-default cancel-button" data-dismiss="modal">Cancelar</button>
+	                <button id="delete-scientific-project-button" type="button" data-dismiss="modal" class="action-button btn btn-success">
+	                	<span class="action-text">Confirmar</span>
+	                	<i class="fa fa-spinner loading-action hide fa-pulse fa-2x fa-fw"></i>
+	                </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- /Remove scientific project modal -->

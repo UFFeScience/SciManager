@@ -1,0 +1,71 @@
+<!-- Create user modal -->
+<div class="modal fade bs-create-user-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+   	<div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="createUserLabel">Criar usuário</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post" autocomplete="off" id="create-user-form" th:object="${userForm}" class="form-horizontal form-label-left" th:novalidate="true" role="form" th:action="@{/user/create-user}">
+                    <input style="display:none" type="text" name="fakeUsernameRemembered"/>
+					<input style="display:none" type="password" name="fakePasswordRemembered"/>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="username">Nome do usuário <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input th:required="true" th:field="*{username}" id="username" type="text" name="username" data-validate-length-range="1,70" placeholder="Nome do usuário" class="form-control col-md-7 col-xs-12" />
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">e-mail <span class="required">*</span>
+                         </label>
+                         <div class="col-md-6 col-sm-6 col-xs-12">
+                         	<input th:field="*{email}" type="email" placeholder="e-mail" id="email" name="email" th:required="true" class="form-control col-md-7 col-xs-12" />
+                         </div>
+                    </div>
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="institution">Instituição </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input th:field="*{institution}" placeholder="Nome da instituição" type="text" value="" id="institution" name="institution" class="form-control col-md-7 col-xs-12" />
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Permissionamento</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div id="gender" class="btn-group" data-toggle="buttons">
+                            	<label th:each="role, iterStat : ${T(com.uff.scimanager.domain.Role).values()}" class="btn btn-default"  th:classappend="${iterStat.index} == 1 ? 'active role-user' : 'role-admin'" data-toggle-class="btn-primary" th:checked="${T(com.uff.scimanager.domain.Role).USER} == role" data-toggle-passive-class="btn-default">
+                            		<input th:field="*{userRole}" th:class="${iterStat.index == 0} ? role-admin : role-user" type="radio" name="role" th:checked="${role == T(com.uff.scimanager.domain.Role).USER}" th:value="${role}" /> <span th:text="${role.getRoleName()}"></span>
+                            	</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label for="password" class="control-label col-md-3 col-sm-3 col-xs-12">Senha (5 a 12 caracteres) </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input th:field="*{password}" id="password" placeholder="Senha" value="" type="password" name="password" data-validate-length-range="5,12" class="form-control col-md-7 col-xs-12" th:required="true" />
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label for="password2" class="control-label col-md-3 col-sm-3 col-xs-12">Confirme a senha</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input th:field="*{repeatedPassword}" placeholder="Senha" id="password2" type="password" name="password2" data-validate-linked="password" class="form-control col-md-7 col-xs-12" th:required="true" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default cancel-button" data-dismiss="modal">Cancelar</button>
+                <button id="create-user-submit-button" type="button" class="action-button btn btn-success">
+                	<span class="action-text">Salvar</span>
+                	<i class="fa fa-spinner loading-action hide fa-pulse fa-2x fa-fw"></i>
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- /Create user modal -->

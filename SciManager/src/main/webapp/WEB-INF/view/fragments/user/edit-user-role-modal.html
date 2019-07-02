@@ -1,0 +1,27 @@
+<!-- Edit user role modal -->
+<div class="modal fade bs-change-user-role-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+   	<div class="modal-dialog modal-sm">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="changeRoleLabel">Deseja mesmo alterar o permissionamento do usuário para <span id="new-role"></span>?</h4>
+            </div>
+            <div class="modal-footer">
+            	<form method="post" id="edit-user-role-form" th:object="${userForm}" class="form-horizontal form-label-left" th:novalidate="true" role="form" th:action="@{/user/edit-user-role}">
+	            	<input id="user-id" type="hidden" name="userId" value="" />
+	                <input id="user-role" type="hidden" name="role" value="" />
+
+	                <button type="button" class="btn btn-default cancel-button" data-dismiss="modal">Cancelar</button>
+	                <button id="change-user-role-button" type="button" data-dismiss="modal" class="action-button btn btn-success">
+	                	<span class="action-text">Salvar</span>
+	                	<i class="fa fa-spinner loading-action hide fa-pulse fa-2x fa-fw"></i>
+	                </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- /Edit user role modal -->

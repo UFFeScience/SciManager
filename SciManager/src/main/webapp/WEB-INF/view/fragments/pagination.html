@@ -1,0 +1,26 @@
+ <!-- pagination content -->
+<div th:if="${pagination != null}" class="pagination-box">
+	<div class="pull-right">
+		<div class="pagination-total">
+			<strong th:text="|Total ${pagination.totalEntities}|">[..]</strong>
+		</div>
+		<ul class="pagination pagination-split">
+			<li th:attr="data-page=${pagination.firstNumberPage}" class="page-link pointer" th:classappend="${pagination.actualPageNumber == pagination.firstNumberPage} ? 'disabled'">
+				<a>Primeira</a>
+			</li>
+		    <li th:attr="data-page=${pagination.previousNumberPage}" class="page-link pointer" th:classappend="${pagination.actualPageNumber == pagination.firstNumberPage} ? 'disabled'">
+		    	<a>Anterior</a>
+		    </li>
+		    <li th:attr="data-page=${pageNumber}" th:each="pageNumber : ${pagination.pageNumbers}" class="page-link pointer" th:classappend="${pagination.actualPageNumber == pageNumber} ? 'active'">
+	  	    	<a th:text="${pageNumber}">[..]</a>
+		    </li>
+			<li th:attr="data-page=${pagination.nextNumberPage}" class="page-link pointer" th:classappend="${pagination.actualPageNumber == pagination.lastNumberPage} ? 'disabled'">
+				<a>Próxima</a>
+			</li>
+			<li th:attr="data-page=${pagination.lastNumberPage}" class="page-link pointer" th:classappend="${pagination.actualPageNumber == pagination.lastNumberPage} ? 'disabled'">
+				<a>Última</a>
+			</li>
+		</ul>
+	</div>
+</div>
+<!-- /pagination content -->

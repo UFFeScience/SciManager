@@ -1,0 +1,33 @@
+<!-- Create scientific experiment modal -->
+<div class="modal fade bs-create-experiment-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+   	<div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="createScientificExperimentLabel">Criar experimento científico</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post" id="create-scientific-experiment-form" th:object="${scientificExperimentForm}" class="form-horizontal form-label-left" th:novalidate="true" role="form" th:action="@{/scientific-experiment/create-scientific-experiment}" accept-charset="UTF-8">
+					<div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="experimentName">Nome do experimento científico <span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input th:required="true" id="experiment-name" th:field="*{experimentName}" type="text" name="experimentName" data-validate-length-range="1,70" placeholder="Nome do experimento" class="form-control col-md-7 col-xs-12" />
+                            <input id="project-id" th:field="*{scientificProjectId}" type="hidden" name="scientificProjectId" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default cancel-button" data-dismiss="modal">Cancelar</button>
+                <button id="create-scientific-experiment-submit-button" type="button" class="action-button btn btn-success">
+                	<span class="action-text">Salvar</span>
+                	<i class="fa fa-spinner loading-action hide fa-pulse fa-2x fa-fw"></i>
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- /Create scientific experiment modal -->

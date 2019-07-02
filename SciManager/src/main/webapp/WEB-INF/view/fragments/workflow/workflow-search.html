@@ -1,0 +1,56 @@
+ <!-- Search content -->
+<form id="search-form" role="form">
+	<div class="pull-right no-pad-right col-md-12 col-sm-12 col-xs-12">
+         <div class="col-md-7 col-sm-7 col-xs-12 form-group pull-right top_search advanced-search">
+        	 <div class="input-group" id="adv-search">
+
+				<input id="currentSearch" type="text" name="search" class="form-control" placeholder="Buscar por..." />
+
+                <div class="input-group-btn">
+                    <div class="btn-group" role="group">
+                        <div class="dropdown dropdown-lg">
+                            <button type="button" class="btn btn-default advanced-search dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            	<span class="caret"></span>
+                            </button>
+                            <div class="dropdown-menu pull-right" role="menu" >
+			                    <div class="col-lg-12 filter-option">
+			                        <label class="control-label col-lg-12">Filtrar por grupo</label>
+			                        <div class="chosen-component-input filter-user-group col-lg-12">
+			                            <select name="responsibleGroupName" class="filter-user-group-select form-control" >
+			                                <option value=""></option>
+			                            </select>
+			                        </div>
+			                    </div>
+			                    <div class="divider col-lg-12"></div>
+
+			        			<button type="button" class="action-button btn btn-success advanced-search-button search-filter-button pull-right">
+				                	<span class="action-text">Buscar</span>
+				                	<i class="fa fa-spinner loading-action hide fa-pulse fa-2x fa-fw"></i>
+				                </button>
+			        			<button class="btn btn-default clear-search-fields pull-right" type="button">Limpar campos</button>
+                            </div>
+                        </div>
+
+                        <span id="search-button" class="input-group-btn">
+		        			<button type="button" class="action-button btn btn-default search-button search-filter-button">
+			                	<span class="action-text">Buscar</span>
+			                	<i class="fa fa-spinner loading-action hide fa-pulse fa-2x fa-fw"></i>
+			                </button>
+		    			</span>
+                    </div>
+                </div>
+            </div>
+     	</div>
+
+     	<div class="form-group pull-right">
+        	<div class="col-md-12 col-sm-12 col-xs-12">
+            	<p class="radio-inline" th:with="myOwn=${filter.getFieldValue('myOwn')}">
+                	Todos:
+	                <input type="radio" class="flat" name="myOwn" value="" th:checked="${myOwn == null} ? true" th:required="true" /> Meus:
+	                <input type="radio" class="flat" name="myOwn" value="true" th:checked="${myOwn == true} ? true" th:required="true" />
+            	</p>
+        	</div>
+    	</div>
+	</div>
+</form>
+<!-- /Search content -->

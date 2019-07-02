@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+										   xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+	<head th:replace="fragments/base-layout :: common_header(~{::title}, ~{::link})">
+		<title>SciManager - UFF</title>
+
+		<!-- chosen -->
+		<link th:href="@{/resources/css/chosen/chosen.min.css}" rel="stylesheet" type="text/css" />
+
+		<!-- summernote -->
+		<link th:href="@{/resources/css/summernote/summernote.css}" rel="stylesheet" type="text/css" />
+
+		<!-- icheck -->
+		<link th:href="@{/resources/css/icheck/flat/green.css}" rel="stylesheet" type="text/css" />
+	</head>
+	<body class="nav-md">
+
+	    <div class="container body">
+	        <div class="main_container">
+
+	        	<div th:replace="fragments/left-col"></div>
+	        	<div th:replace="fragments/top-nav"></div>
+
+	        	<!-- page content -->
+	            <div class="right_col" role="main">
+
+	            	<!-- page body -->
+	            	<div class="page-main-content">
+	            		<div class="page-title">
+				            <div class="no-pad-left full-width title_left col-md-12 col-sm-12 col-xs-12">
+				            	<div class="no-pad-left col-md-12 col-sm-12 col-xs-12">
+									<h2 th:if="${scientificExperimentDTO != null}">
+										<small>Experimento científico</small>
+										<span th:text="|${scientificExperimentDTO.experimentName}|"></span>
+									</h2>
+			                        <ol th:if="${scientificExperimentDTO != null}" class="no-pad-left breadcrumb">
+										<li class="breadcrumb-item"><a th:href="@{/scientific-project/all-scientific-projects(page=1, myOwn=true)}">Projetos científicos</a></li>
+									  	<li class="breadcrumb-item"><a th:href="@{|/scientific-project/${scientificExperimentDTO.scientificProject.scientificProjectId}/project-details?tab=dashboard|}" th:text="|${scientificExperimentDTO.scientificProject.projectName}|">[..]</a></li>
+									  	<li class="breadcrumb-item active" th:text="|${scientificExperimentDTO.experimentName}|">[..]</li>
+									</ol>
+				            	</div>
+				            </div>
+				        </div>
+						<div class="sub-menu">
+							<ul class="tabs-menu">
+								<li class="experiment-dashboard active"><a>Dashboard</a></li>
+								<li class="experiment-documentation"><a>Documentação</a></li>
+								<li class="experiment-workflows"><a>Workflows</a></li>
+						    </ul>
+						</div>
+
+						<div class="clearfix"></div>
+
+						<div class="tab-container">
+							<!-- tabs urls -->
+							<input id="search-dashboard-tab-url" type="hidden" name="searchUrl" th:value="${searchDashboardTabUrl}" />
+							<input id="search-workflows-tab-url" type="hidden" name="searchUrl" th:value="${searchWorkflowsTabUrl}" />
+							<input id="search-experiment-documentation-tab-url" type="hidden" name="searchUrl" th:value="${searchDocumentationTabUrl}" />
+							<!-- end of tabs urls -->
+
+							<div class="tab-content"></div>
+
+							<div class="loading-data-async loading-tab">
+		           				<i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+		           			</div>
+
+						</div>
+
+	            	</div>
+	            	<!-- /page body -->
+
+		            <div th:replace="fragments/footer"></div>
+	            </div>
+	            <!-- /page content -->
+
+	        </div>
+	    </div>
+
+		<th:block th:replace="fragments/base-layout :: common_scripts(~{::script})">
+			<!-- notification -->
+			<script th:src="@{/resources/js/notify/pnotify.core.js}"></script>
+			<script th:src="@{/resources/js/notify/pnotify.buttons.js}"></script>
+			<script th:src="@{/resources/js/notify/pnotify.nonblock.js}"></script>
+
+			<!-- chosen -->
+			<script th:src="@{/resources/js/chosen/chosen.jquery.min.js}"></script>
+
+			<!-- summernote -->
+			<script th:src="@{/resources/js/summernote/summernote.min.js}"></script>
+
+			<!-- icheck -->
+			<script th:src="@{/resources/js/icheck/icheck.min.js}"></script>
+
+			<!-- custom view js -->
+			<script th:src="@{/resources/js/custom-view-js/sci-manager.commons.js}"></script>
+			<script th:src="@{/resources/js/custom-view-js/notifications.commons.js}"></script>
+			<script th:src="@{/resources/js/custom-view-js/async-data.commons.js}"></script>
+			<script th:src="@{/resources/js/custom-view-js/filter-search.commons.js}"></script>
+			<script th:src="@{/resources/js/custom-view-js/popover.commons.js}"></script>
+
+			<script th:src="@{/resources/js/custom-view-js/experiment-dashboard.js}"></script>
+			<script th:src="@{/resources/js/custom-view-js/experiment-documentation.js}"></script>
+			<script th:src="@{/resources/js/custom-view-js/scientific-experiment.js}"></script>
+			<script th:src="@{/resources/js/custom-view-js/workflow.js}"></script>
+
+			<script th:src="@{/resources/js/custom-view-js/experiment-details.js}"></script>
+		</th:block>
+
+	</body>
+</html>

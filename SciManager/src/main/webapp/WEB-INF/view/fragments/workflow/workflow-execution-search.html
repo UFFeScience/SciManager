@@ -1,0 +1,75 @@
+ <!-- Search content -->
+<div class="title_right col-md-12 col-sm-12 col-xs-12">
+	<form id="search-form" role="form" th:with="myOwn=${filter.getFieldValue('myOwn')}, initialDate=${filter.getFieldValue('initialDate')}, finalDate=${filter.getFieldValue('finalDate')}">
+    	 <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search task-search ">
+        	 <div class="input-group" id="adv-search">
+                <input id="currentSearch" type="text" name="search" class="form-control" placeholder="Buscar por..." />
+                <div class="input-group-btn">
+                    <div class="btn-group" role="group">
+                        <div class="dropdown dropdown-lg">
+                            <button type="button" class="btn btn-default advanced-search dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            	<span class="caret"></span>
+                            </button>
+                            <div class="dropdown-menu pull-right" role="menu">
+                            	<div class="col-lg-12 filter-option">
+			                        <label class="control-label col-lg-12">Filtrar por status</label>
+			                        <div class="chosen-component-input filter-status col-lg-12">
+			                            <select name="executionStatus" class="filter-status-select form-control" >
+			                                <option value=""></option>
+			                                <th:block th:each="executionStatus : ${T(com.uff.scimanager.domain.WorkflowExecutionStatus).values()}">
+			                               		<option th:value="${executionStatus}" th:text="${executionStatus.executionStatusName}"></option>
+			                               	</th:block>
+			                            </select>
+			                        </div>
+			                    </div>
+			                    <div class="divider col-lg-12"></div>
+
+			        			<button type="button" class="action-button btn btn-success advanced-search-button search-filter-button pull-right">
+				                	<span class="action-text">Buscar</span>
+				                	<i class="fa fa-spinner loading-action hide fa-pulse fa-2x fa-fw"></i>
+				                </button>
+			        			<button class="btn btn-default clear-search-fields pull-right" type="button">Limpar campos</button>
+                            </div>
+                        </div>
+
+                        <span id="search-button" class="input-group-btn">
+		        			<button type="button" class="action-button btn btn-default search-button search-filter-button">
+			                	<span class="action-text">Buscar</span>
+			                	<i class="fa fa-spinner loading-action hide fa-pulse fa-2x fa-fw"></i>
+			                </button>
+		    			</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group pull-right col-md-12 col-sm-12 col-xs-12 radio-search">
+	        	<div class="pull-right">
+	            	<p class="radio-inline">
+	                	Todas:
+		                <input type="radio" class="flat" name="myOwn" value="" th:checked="${myOwn == null} ? true" th:required="true" /> Minhas execuções:
+		                <input type="radio" class="flat" name="myOwn" value="true" th:checked="${myOwn == true} ? true" th:required="true" />
+	            	</p>
+	        	</div>
+	    	</div>
+
+     	</div>
+
+    	<div class="form-group filter-date-search pull-right col-md-7 col-sm-7 col-xs-12">
+       	 	<div class="pull-right">
+       	 		<div class="col-md-5 pull-right xdisplay_inputx form-group has-feedback">
+		            <input type="text" name="finalDate" th:value="${finalDate}" class="form-control has-feedback-left calendar-filter date-input" placeholder="Data final" aria-describedby="inputSuccess2Status" />
+		            <span class="fa fa-calendar form-control-feedback left" aria-hidden="true"></span>
+		            <span id="inputSuccess2Status" class="sr-only">(success)</span>
+	            </div>
+
+	            <div class="col-md-5 pull-right xdisplay_inputx form-group has-feedback">
+		            <input type="text" name="initialDate" th:value="${initialDate}" class="form-control has-feedback-left calendar-filter date-input" placeholder="Data inicial" aria-describedby="inputSuccess2Status" />
+		            <span class="fa fa-calendar form-control-feedback left" aria-hidden="true"></span>
+		            <span id="inputSuccess2Status" class="sr-only">(success)</span>
+	            </div>
+            </div>
+     	</div>
+
+	</form>
+</div>
+<!-- /Search content -->

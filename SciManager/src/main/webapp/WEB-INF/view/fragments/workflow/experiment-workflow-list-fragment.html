@@ -1,0 +1,136 @@
+<!-- page body -->
+<div class="page-main-content">
+	<div class="row loaded-content">
+		<div class="col-md-12 sci-manager-data-table-container">
+			<div class="x_panel">
+				<div class="x_content">
+
+					<div class="row">
+
+						<div class="col-md-12 col-sm-12 col-xs-12 no-pad-left" style="text-align:center;">
+							<div class="pull-left">
+								<button type="button" class="btn btn-success" data-toggle="modal" data-target=".bs-create-workflow-modal-lg">Criar workflow <i class="fa fa-plus"></i></button>
+							</div>
+						</div>
+
+						<div class="clearfix"></div>
+						<input id="search-workflows-url" type="hidden" name="searchUrl" th:value="${searchWorkflowsListUrl}" />
+
+						<!-- start workflow list -->
+						<div class="table-container">
+							<table class="table default-sci-table">
+                                <thead>
+                                    <tr>
+                                        <th>Nome do workflow</th>
+                                        <th>Versão</th>
+                                        <th>SGWfC</th>
+                                        <th>Grupo responsável</th>
+                                        <th style="width: 20%"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                	<th:block th:each="workflow : ${workflowDTOs}">
+                                        <tr th:id="|workflow-row-${workflow.workflowId}|">
+                                            <td>
+												<a th:if="${workflow.isEditablebyUser == true}" th:id="|workflow-name-${workflow.workflowId}|" th:text="${workflow.workflowName}" th:href="@{|/workflow/${workflow.workflowId}/workflow-details|}">[..]</a>
+												<a th:if="${workflow.isEditablebyUser != true}" th:id="|workflow-name-${workflow.workflowId}|" th:text="${workflow.workflowName}">[..]</a>
+												                                                <input th:id="|editable-workflow-${workflow.workflowId}|" type="hidden" th:value="${workflow.isEditablebyUser}" />
+												<input th:id="|workflow-encoded-name-${workflow.workflowId}|" type="hidden" th:value="${workflow.encodedWorkflowName}" />
+
+												<input th:id="|experiment-id-${workflow.workflowId}|" type="hidden" th:value="${workflow.scientificExperiment.scientificExperimentId}" />
+												<input th:id="|project-id-${workflow.workflowId}|" type="hidden" th:value="${workflow.scientificProject.scientificProjectId}" />
+												<br />
+                                            </td>
+                                            <td>
+                                                <a th:id="|version-${workflow.workflowId}|" th:text="${workflow.currentVersion}">[..]</a>
+                                                <br />
+                                            </td>
+                                            <td th:id="|configure-td-${workflow.workflowId}|">
+                                                <a th:id="|swfms-${workflow.workflowId}|" th:text="${workflow.swfms}">[..]</a>
+                                                <br />
+                                            </td>
+                                            <td>
+                                                <a th:id="|responsible-group-${workflow.workflowId}|" th:text="${workflow.responsibleGroup.groupName}">[..]</a>
+                                                <br />
+                                            </td>
+                                            <td class="actions">
+												<div th:if="${workflow.isEditablebyUser == true}" class="btn-group">
+                                                	<a data-toggle="dropdown" class="dropdown-toggle btn btn-default btn-xs">
+                                            			<i data-toggle="tooltip" data-placement="top" title="Ver detalhes" class="fa fa-folder-open"></i>
+                                            		</a>
+                                            		<ul class="dropdown-menu pull-right" role="menu">
+														<li role="presentation">
+			                                            	<a th:href="@{|/workflow/${workflow.workflowId}/workflow-details?tab=dashboard|}">
+	                                                			<i class="fa fa-dashboard"></i> Dashboard do workflow
+	                                                		</a>
+			                                            </li>
+			                                            <li role="presentation">
+			                                            	<a th:href="@{|/workflow/${workflow.workflowId}/workflow-details?tab=documentation|}">
+	                                                			<i class="fa fa-book"></i> Documentação
+	                                                		</a>
+			                                            </li>
+			                                            <li th:id="|workflow-documentation-${workflow.workflowId}|"th:if="${workflow.isEditablebyUser == true}" role="presentation">
+			                                            	<a th:href="@{|/workflow/${workflow.workflowId}/workflow-details?tab=execution-history|}">
+	                                                			<i class="fa fa-history"></i> Histórico de execuções
+	                                                		</a>
+			                                            </li>
+			                                            <li th:if="${workflow.isEditablebyUser == true}" role="presentation">
+				                                            <a th:href="@{|/workflow/${workflow.workflowId}/workflow-details?tab=model-files|}">
+	                                                			<i class="fa fa-file-archive-o"></i> Arquivos modelo
+	                                                		</a>
+			                                            </li>
+			                                            <li th:if="${workflow.isEditablebyUser == true}" role="presentation">
+			                                            	<a th:href="@{|/workflow/${workflow.workflowId}/workflow-details?tab=macro-graph|}">
+	                                                			<i class="fa fa-rotate-90 fa-share-alt"></i> Grafo macro
+	                                                		</a>
+			                                            </li>
+			                                            <li th:if="${workflow.isEditablebyUser == true}" role="presentation">
+			                                            	<a th:href="@{|/workflow/${workflow.workflowId}/workflow-details?tab=detailed-graph|}">
+	                                                			<i class="fa fa-sitemap"></i> Grafo detalhado
+	                                                		</a>
+			                                            </li>
+			                                        </ul>
+		                                        </div>
+                                                <a th:if="${workflow.isEditablebyUser == true}" data-toggle="modal" data-target=".bs-edit-workflow-modal-lg" th:id="|edit-workflow-${workflow.workflowId}|" class="edit-workflow btn btn-default btn-xs">
+                                                	<i data-toggle="tooltip" data-placement="top" title="Editar" class="fa fa-pencil"></i>
+                                                </a>
+                                                <a th:if="${(headerData.currentUser != null and headerData.currentUser.userRole != T(com.uff.scimanager.domain.Role).USER) and workflow.isEditablebyUser == true}" th:id="|remove-workflow-${workflow.workflowId}|" data-toggle="modal" data-target=".bs-remove-workflow-modal-lg" type="button" class="remove-workflow-button btn btn-default btn-xs">
+                                                	<i data-toggle="tooltip" data-placement="top" title="Remover" class="fa red fa-trash-o"></i>
+                                      		 	</a>
+                                            </td>
+                                        </tr>
+								    </th:block>
+                                </tbody>
+                            </table>
+						</div>
+						<!-- end workflow list -->
+
+						<th:block th:if="${workflowDTOs != null and workflowDTOs.size() lt workflowsTotal}">
+							<div class="text-center">
+								<a class="btn btn-more btn-xs pointer experiment-workflows">
+									<i class="fa fa-search-plus"></i> Ver todos
+								</a>
+							</div>
+						</th:block>
+
+						<div class="alert-no-content alert alert-info alert-dismissible" role="alert" th:if="${workflowDTOs != null and workflowDTOs.isEmpty()}">
+                        	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                            </button>
+                            Nenhum workflow encontrado
+                        </div>
+
+                        <div class="loading-data-async">
+	           				<i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+	           			</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div th:replace="fragments/workflow/create-workflow-modal"></div>
+		<div th:replace="fragments/workflow/edit-workflow-modal"></div>
+		<div th:replace="fragments/workflow/remove-workflow-modal"></div>
+	</div>
+</div>
+<!-- /page body -->

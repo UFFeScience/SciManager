@@ -1,0 +1,28 @@
+<!-- Remove user group modal -->
+<div class="modal fade bs-remove-user-group-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+   	<div class="modal-dialog modal-md">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="deleteUserGroupLabel">Deseja mesmo excluir o grupo?</h4>
+                <h4 class="modal-title hide" id="canNotDeleteUserGroupLabel">Não será possível excluir o grupo de usuários, pois o mesmo está associado a <span id="dependencies-message"></span>. Desassocie o grupo para poder removê-lo.</h4>
+            </div>
+            <div class="modal-footer">
+            	<form method="post" id="remove-user-group-form" class="form-horizontal form-label-left" th:novalidate="true" role="form" th:action="@{/user-group/remove-user-group}">
+	            	<input id="authorization-token" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+	            	<input id="remove-user-group-id" type="hidden" name="userGroupId" />
+
+	                <button type="button" class="btn btn-default cancel-button" data-dismiss="modal">Cancelar</button>
+	                <button id="delete-user-group-button" type="button" data-dismiss="modal" class="action-button btn btn-success">
+	                	<span class="action-text">Confirmar</span>
+	                	<i class="fa fa-spinner loading-action hide fa-pulse fa-2x fa-fw"></i>
+	                </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- /Remove user group modal -->

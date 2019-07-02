@@ -1,0 +1,22 @@
+<!-- Generate graph from model filer modal -->
+<div class="modal fade bs-generate-graph-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+   	<div class="modal-dialog modal-md">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="confirmGenerateGraph">Ao gerar o grafo a partir de um arquivo modelo você perderá seu progresso atual, deseja gerar grafo mesmo assim?</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default cancel-button" data-dismiss="modal">Cancelar</button>
+                <button id="confirm-generate-graph-button" type="button" data-dismiss="modal" class="action-button btn btn-success">
+                	<span class="action-text">Confirmar</span>
+                	<i class="fa fa-spinner loading-action hide fa-pulse fa-2x fa-fw"></i>
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- /Generate graph from model filer modal -->

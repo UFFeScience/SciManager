@@ -1,0 +1,56 @@
+<div class="x_content">
+	<div class="row">
+		<div th:if="${scientificProjectDTO != null}" class="project_detail">
+			<input id="search-project-details-url" type="hidden" name="searchUrl" th:value="${searchProjectDetailsUrl}" />
+
+			<p class="title">
+				<span th:id="|project-name-${scientificProjectDTO.scientificProjectId}|" th:text="${scientificProjectDTO.projectName}">[..]</span>
+				<span th:if="${(headerData != null and headerData.currentUser != null and headerData.currentUser.userRole != T(com.uff.scimanager.domain.Role).USER) or (scientificProjectDTO.isEditablebyUser == true)}" data-toggle="modal" data-target=".bs-edit-project-modal-lg" th:id="|edit-scientific-project-${scientificProjectDTO.scientificProjectId}|" class="edit-scientific-project">
+					<i data-toggle="tooltip" data-placement="top" title="Editar nome" class="fa fa-pencil pointer"></i>
+				</span>
+			</p><p></p>
+
+			<p class="title">Grupos responsáveis:</p>
+			<p>
+				<span th:text="${scientificProjectDTO.responsibleGroupNames}"></span>
+			</p><p></p>
+
+			<table class="project-details-table">
+				<tr>
+					<td>
+						<p class="title">Experimentos Científicos: <span th:text="${totalExperiments}"></span></p>
+					</td>
+					<td>
+						<p class="title">Workflows Científicos: <span th:text="${totalWorkflows}"></span></p>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p class="title">Tarefas a fazer: <span class="status-to-do" th:text="${totalTasksTodo}"></span></p>
+					</td>
+					<td>
+						<p class="title">Tarefas fazendo: <span class="status-doing" th:text="${totalTasksDoing}"></span></p>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p class="title">Tarefas concluídas: <span class="status-done" th:text="${totalTasksDone}"></span></p>
+					</td>
+					<td>
+						<p class="title">Tarefas atrasadas: <span class="status-late" th:text="${totalTasksLate}"></span></p>
+					</td>
+				</tr>
+			</table>
+		</div>
+
+		<div class="alert-no-content alert alert-info alert-dismissible" role="alert" th:if="${scientificProjectDTO == null}">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+			</button>
+			Projeto científico não encontrado
+		</div>
+
+		<div class="loading-data-async">
+			<i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+		</div>
+	</div>
+</div>

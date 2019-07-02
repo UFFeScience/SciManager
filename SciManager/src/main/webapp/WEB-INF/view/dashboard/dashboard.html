@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+										   xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+	<head th:replace="fragments/base-layout :: common_header(~{::title}, ~{})">
+		<title>SciManager - UFF</title>
+	</head>
+	<body class="nav-md">
+
+	    <div class="container body">
+	        <div class="main_container">
+
+	        	<div th:replace="fragments/left-col"></div>
+	        	<div th:replace="fragments/top-nav"></div>
+
+	        	<!-- page content -->
+	            <div class="right_col" role="main">
+
+	            	<!-- page body -->
+	            	<div class="page-main-content">
+
+						<div class="dashboard-content">
+
+							<input id="search-projects-url" type="hidden" name="searchUrl" th:value="${searchProjectsUrl}" />
+							<input id="search-workflows-url" type="hidden" name="searchUrl" th:value="${searchWorkflowsUrl}" />
+							<input id="search-tasks-url" type="hidden" name="searchUrl" th:value="${searchTasksUrl}" />
+
+		            		<div class="row loaded-content">
+
+		                        <div class="col-md-4 pull-left">
+		                            <div class="x_panel dashboard-box">
+		                                <div class="x_title">
+		                                    <h2>Bem vindo(a) <span th:text="${headerData.currentUser.user.username}"></span></h2>
+		                                    <div class="clearfix"></div>
+		                                </div>
+		                            </div>
+
+		                            <div class="x_panel dashboard-box">
+		                                <div class="x_title">
+		                                    <h2><i class="fa fa-tasks"></i> Minhas tarefas</h2>
+		                                    <ul class="nav navbar-right panel_toolbox">
+		                                        <li class="pull-right"><a class="pointer collapse-link"><i class="fa fa-chevron-down"></i></a>
+		                                        </li>
+		                                    </ul>
+		                                    <div class="clearfix"></div>
+		                                </div>
+		                                <div class="x_content">
+											<div class="tasks-container">
+												<div th:replace="fragments/task/tasks-home-dashboard-fragment"></div>
+											</div>
+		                                </div>
+		                            </div>
+		                        </div>
+
+		                        <div class="col-md-8 pull-right">
+		                        	<div class="x_panel dashboard-box">
+		                                <div class="x_title">
+		                                    <h2><i class="fa fa-briefcase"></i> Meus projetos científicos</h2>
+		                                    <ul class="nav navbar-right panel_toolbox">
+		                                        <li class="pull-right"><a class="pointer collapse-link"><i class="fa fa-chevron-down"></i></a>
+		                                        </li>
+		                                    </ul>
+		                                    <div class="clearfix"></div>
+		                                </div>
+		                                <div class="x_content">
+											<div class="projects-container">
+												<div th:replace="fragments/scientific-project/projects-home-dashboard-fragment"></div>
+											</div>
+		                                </div>
+		                            </div>
+
+		                            <div class="x_panel dashboard-box">
+		                                <div class="x_title">
+		                                    <h2><i class="fa fa-sitemap"></i> Meus workflows</h2>
+		                                    <ul class="nav navbar-right panel_toolbox">
+		                                        <li class="pull-right"><a class="pointer collapse-link"><i class="fa fa-chevron-down"></i></a>
+		                                        </li>
+		                                    </ul>
+		                                    <div class="clearfix"></div>
+		                                </div>
+		                                <div class="x_content">
+											<div class="workflows-container">
+												<div th:replace="fragments/workflow/workflows-home-dashboard-fragment"></div>
+											</div>
+		                                </div>
+		                            </div>
+		                        </div>
+		                    </div>
+						</div>
+	            	</div>
+	            	<!-- /page body -->
+
+		            <div th:replace="fragments/footer"></div>
+	            </div>
+	            <!-- /page content -->
+
+	        </div>
+	    </div>
+
+		<th:block th:replace="fragments/base-layout :: common_scripts(~{::script})">
+			<!-- notification -->
+			<script th:src="@{/resources/js/notify/pnotify.core.js}"></script>
+			<script th:src="@{/resources/js/notify/pnotify.buttons.js}"></script>
+			<script th:src="@{/resources/js/notify/pnotify.nonblock.js}"></script>
+
+			<!-- custom view js -->
+			<script th:src="@{/resources/js/custom-view-js/sci-manager.commons.js}"></script>
+			<script th:src="@{/resources/js/custom-view-js/notifications.commons.js}"></script>
+			<script th:src="@{/resources/js/custom-view-js/async-data.commons.js}"></script>
+			<script th:src="@{/resources/js/custom-view-js/filter-search.commons.js}"></script>
+			<script th:src="@{/resources/js/custom-view-js/popover.commons.js}"></script>
+
+			<script th:src="@{/resources/js/custom-view-js/dashboard.js}"></script>
+		</th:block>
+
+	</body>
+</html>

@@ -1,0 +1,212 @@
+<!-- page body -->
+<div class="page-main-content">
+	<div class="row loaded-content">
+		<div class="col-md-12 sci-manager-data-table-container">
+			<div class="x_panel">
+				<div class="x_content">
+
+					<div class="row">
+
+						<div class="col-md-12 col-sm-12 col-xs-12 no-pad-left no-pad-right">
+							<div class="no-pad-left col-md-6 col-sm-6 col-xs-6">
+								<div class="pull-left">
+									<button type="button" class="btn btn-success" data-toggle="modal" data-target=".bs-create-task-modal-lg">Criar tarefa <i class="fa fa-plus"></i></button>
+								</div>
+
+								<div class="clearfix"></div>
+
+								<div th:replace="fragments/search-filter"></div>
+							</div>
+
+							<div class="col-md-6 col-sm-6 pull-right col-xs-6 no-pad-right">
+								<form th:replace="fragments/task/task-search"></form>
+							</div>
+						</div>
+
+						<div class="clearfix"></div>
+
+						<div class="table-container">
+							<!-- start task list -->
+							<table class="table task-sci-table">
+								<thead>
+									<tr>
+										<th style="width: 4%">Status</th>
+										<th style="width: 28%">Título</th>
+										<th style="width: 17%">Responsável</th>
+										<th style="width: 8%">Fase</th>
+										<th style="width: 3%">Dias estimados</th>
+										<th style="width: 5%">Data limite</th>
+										<th style="width: 19%">Tags</th>
+										<th style="width: 10%"></th>
+									</tr>
+								</thead>
+								<tbody>
+									<th:block th:each="task : ${taskDTOs}">
+										<tr>
+											<td th:id="|status-td-${task.taskId}">
+												<input th:id="|task-late-${task.taskId}|" type="hidden" th:value="${task.late}" />
+												<input th:id="|task-status-helper-${task.taskId}|" type="hidden" th:value="${task.status}" />
+
+												<button th:id="|status-button-${task.taskId}|" th:if="${task.late == true and T(com.uff.scimanager.domain.TaskStatus).DONE != task.status}" type="button" class="btn-status btn btn-round btn-danger status-late" th:text="${task.status.statusName}">[..]</button>
+												<button th:id="|status-button-${task.taskId}|" th:if="${task.late != true and T(com.uff.scimanager.domain.TaskStatus).TODO == task.status and T(com.uff.scimanager.domain.TaskStatus).DOING != task.status and T(com.uff.scimanager.domain.TaskStatus).DONE != task.status}" type="button" class="btn-status btn btn-round btn-primary status-to-do" th:text="${task.status.statusName}">[..]</button>
+												<button th:id="|status-button-${task.taskId}|" th:if="${task.late != true and T(com.uff.scimanager.domain.TaskStatus).DOING == task.status and T(com.uff.scimanager.domain.TaskStatus).TODO != task.status and T(com.uff.scimanager.domain.TaskStatus).DONE != task.status}" type="button" class="btn-status btn btn-round btn-info status-doing" th:text="${task.status.statusName}">[..]</button>
+												<button th:id="|status-button-${task.taskId}|" th:if="${T(com.uff.scimanager.domain.TaskStatus).DONE == task.status and T(com.uff.scimanager.domain.TaskStatus).TODO != task.status and T(com.uff.scimanager.domain.TaskStatus).DOING != task.status}" type="button" class="btn-status btn btn-round btn-success status-done" th:text="${task.status.statusName}">[..]</button>
+												<br />
+
+												<div class="popover-head hide">
+													<span class="task-popover-title">Editar status</span>
+												</div>
+												<div class="popover-content hide">
+													<div class="task-popover-content col-md-12 col-sm-12 col-xs-12">
+														<form>
+															<select th:required="true" name="taskStatus" class="status-select form-control" >
+																<th:block th:each="status : ${T(com.uff.scimanager.domain.TaskStatus).values()}">
+																	<option th:selected="${task.status == status}" th:value="${status}" th:text="${status.statusName}"></option>
+																</th:block>
+															</select>
+														</form>
+
+														<div class="divider col-sm-12 col-xs-12 task-popover-divider"></div>
+
+														<button th:id="|update-status-${task.taskId}" class="btn btn-success task-status-popover-btn update-status-button pull-right" type="button"><i class="fa fa-check"></i></button>
+														<button class="btn btn-default task-status-popover-btn cancel-edit-status-button pull-right" type="button"><i class="fa fa-close"></i></button>
+													</div>
+												</div>
+											</td>
+											<td th:id="|task-details-${task.taskId}|">
+												<a th:id="|task-title-${task.taskId}" th:text="${task.taskTitle}">[..]</a>
+												<a th:id="|details-button-${task.taskId}|" class="btn-circle details-button btn btn-default btn-xs">
+													<i data-toggle="tooltip" data-placement="top" title="Ver mais informações" class="fa fa-info"></i>
+												</a>
+												<input th:id="|task-description-${task.taskId}|" th:value="${task.description}" type="hidden" />
+												<input th:id="|task-url-repository-${task.taskId}|" th:value="${task.urlRepository}" type="hidden" />
+												<a th:text="${task.creationDate}" class="hide">[..]</a>
+												<a th:if="${task.workflow.workflowId != null}" th:id="|workflow-${task.taskId}|" th:text="${task.workflow.workflowName}" class="hide">[..]</a>
+												<a th:if="${task.workflow.workflowId == null}" th:id="|workflow-${task.taskId}|" class="hide"></a>
+												<br />
+
+												<div class="popover-description-head hide">
+													<span class="task-popover-title">Detalhes</span>
+												</div>
+												<div class="popover-description-content hide">
+													<div class="task-popover-content popover-description-container col-md-12 col-sm-12 col-xs-12">
+														<b>Criada por: </b> <span th:if="${task.userCreator == null}">--</span><span th:if="${task.userCreator != null}" th:text="${task.userCreator.username}"></span> <br />
+														<b>Criada em: </b> <span th:text="${task.creationDate}"></span> <br />
+														<b>Workflow: </b> <span th:if="${task.workflow.workflowId != null}" th:text="${task.workflow.workflowName}">[..]</span> <span th:if="${task.workflow.workflowId == null}">--</span> <br />
+														<div th:class="${task.urlRepository != null} ? 'popover-task-description' : ''">
+															<b>Descrição: </b> <span th:if="${task.description != null}" th:text="${task.description}">[..]</span> <span th:if="${task.description == null}">--</span> <br />
+														</div>
+														<th:block th:if="${task.urlRepository != null}">
+															<b>URL do repositório: </b> <a class="task-url-repository" th:href="${task.urlRepository}" th:text="${task.urlRepository}" target="_blank"></a> <br />
+														</th:block>
+													</div>
+												</div>
+											</td>
+											<td>
+												<th:block th:if="${task.userGroupInTask.groupName != null}">
+													<a th:id="|user-group-${task.taskId}" th:text="${task.userGroupInTask.groupName}">[..]</a>
+												</th:block>
+												<th:block th:if="${task.userGroupInTask.groupName == null and !task.usersInTask.isEmpty()}">
+													<ul th:id="|users-${task.taskId}|" class="list-inline group-users-list">
+														<li th:each="user : ${task.usersInTask}" th:attr="data-email=${user.email}, data-username=${user.username}" class="user-in-task">
+															<div class="alert alert-dismissible responsible-user-info display-inline-block" role="alert">
+																<div th:if="${user.hasProfileImage == true}" class="user-group-profile-image">
+																	<img th:if="${task.workflow.workflowId != null}" data-toggle="tooltip" data-placement="top" th:title="|${user.username} (${task.workflow.responsibleGroup.groupName})|" th:src="@{/resources/images/processing.gif}" th:attr="data-user-id=|img-profile-${user.userId}|" alt="imagem de perfil do usuário" class="avatar img-loading-small img-async-load" />
+																	<img th:if="${task.workflow.workflowId == null}" data-toggle="tooltip" data-placement="top" th:title="|${user.username}|" th:src="@{/resources/images/processing.gif}" th:attr="data-user-id=|img-profile-${user.userId}|" alt="imagem de perfil do usuário" class="avatar img-loading-small img-async-load" />
+																</div>
+																<div th:if="${user.hasProfileImage != true}" class="user-group-profile-image">
+																	<img th:if="${task.workflow.workflowId != null}" data-toggle="tooltip" data-placement="top" th:title="|${user.username} (${task.workflow.responsibleGroup.groupName})|" th:src="@{/resources/images/user.png}" alt="imagem de perfil do usuário" class="avatar" />
+																	<img th:if="${task.workflow.workflowId == null}" data-toggle="tooltip" data-placement="top" th:title="|${user.username}|" th:src="@{/resources/images/user.png}" alt="imagem de perfil do usuário" class="avatar" />
+																</div>
+															</div>
+														</li>
+													</ul>
+												</th:block>
+
+												<th:block th:if="${task.userGroupInTask.groupName == null and task.usersInTask.isEmpty()}">
+													<span>--</span>
+												</th:block>
+											</td>
+											<td>
+												<a th:id="|phase-${task.taskId}|" th:text="${task.phase.phaseName}">[..]</a>
+												<br />
+											</td>
+											<td>
+												<a th:id="|estimated-time-${task.taskId}|" th:if="${task.estimatedTime != null}" th:text="${task.estimatedTime}" class="badge badge-status">[..]</a>
+												<a th:if="${task.estimatedTime == null}" th:text="|--|">[..]</a>
+												<br />
+											</td>
+											<td>
+												<a th:if="${task.deadline != null and task.late != true}" th:id="|deadline-${task.taskId}" class="deadline-task" th:text="${task.deadline}">[..]</a>
+												<a th:if="${task.deadline != null and task.late == true}" th:id="|deadline-${task.taskId}" th:class="${T(com.uff.scimanager.domain.TaskStatus).DONE != task.status} ? 'danger-text deadline-task' : 'deadline-task'" th:text="${task.deadline}">[..]</a>
+												<a th:if="${task.deadline == null}" th:id="|deadline-${task.taskId}" class="deadline-task" th:text="|--|">[..]</a>
+												<br />
+											</td>
+											<td>
+												<div th:id="|tags-${task.taskId}|" th:if="${task.tags != null and !task.tags.isEmpty()}">
+													<th:block th:each="tag : ${task.tags}">
+														<span class="task-tag label label-default" th:text="${tag.tagName}">[..]</span>
+													</th:block>
+												</div>
+
+												<div th:if="${task.tags == null or task.tags.isEmpty()}" th:text="|--|">[..]</div>
+											</td>
+											<td class="actions">
+												<a th:if="${task.phase.allowExecution == true and task.workflow.workflowId != null}" th:id="|run-button-${task.taskId}|" th:classappend="${T(com.uff.scimanager.domain.TaskStatus).DOING != task.status} ? 'run-blocked' : ''" class="btn-circle run-task-workflow-button btn btn-default btn-xs">
+													<input type="hidden" th:id="|task-workflow-id-${task.taskId}|" th:value="${task.workflow.workflowId}" />
+													<i data-toggle="tooltip" data-placement="top" title="Executar Workflow" class="run-workflow-button fa fa-play"></i>
+												</a>
+												<a th:id="|edit-task-${task.taskId}|" data-toggle="modal" data-target=".bs-edit-task-modal-lg" class="edit-task-button btn btn-default btn-xs">
+													<i data-toggle="tooltip" data-placement="top" title="Editar tarefa" class="fa fa-pencil"></i>
+												</a>
+												<a th:id="|remove-task-${task.taskId}|" data-toggle="modal" data-target=".bs-remove-task-modal-lg" class="remove-task-button btn btn-default btn-xs">
+													<i data-toggle="tooltip" data-placement="top" title="Remover" class="fa red fa-trash-o"></i>
+												</a>
+											</td>
+										</tr>
+									</th:block>
+								</tbody>
+							</table>
+							<!-- end task list -->
+
+							<div class="alert-no-content alert alert-info alert-dismissible" role="alert" th:if="${taskDTOs != null and taskDTOs.isEmpty()}">
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+								</button>
+								Não há nenhuma tarefa para este projeto científico.
+							</div>
+
+						</div>
+
+						<!-- users of usergroup -->
+						<div th:if="${scientificProjectDTO != null}" class="hide">
+							<th:block th:each="workflow : ${scientificProjectDTO.workflows}">
+								<select th:if="${workflow.isEditablebyUser == true}" th:id="|workflow-users-select-${workflow.workflowId}|" class="hide">
+									<th:block th:each="user : ${workflow.responsibleGroup.groupUsers}">
+										<option th:value="${user.email}" th:text="${user.username}"></option>
+									</th:block>
+								</select>
+							</th:block>
+						</div>
+
+						<div th:if="${scientificProjectDTO != null}" class="hide">
+							<select id="project-users-select" class="hide">
+								<th:block th:each="user : ${scientificProjectDTO.projectMembers}">
+									<option th:value="${user.email}" th:text="${user.username}"></option>
+								</th:block>
+							</select>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div th:replace="fragments/pagination"></div>
+
+		<div th:replace="fragments/task/create-task-modal"></div>
+	    <div th:replace="fragments/task/edit-task-modal"></div>
+	    <div th:replace="fragments/task/remove-task-modal"></div>
+	    <div th:replace="fragments/task/run-task-workflow-modal"></div>
+	</div>
+</div>
+<!-- /page body -->

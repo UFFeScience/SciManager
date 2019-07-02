@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+										   xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+	<head th:replace="fragments/base-layout :: common_header(~{::title}, ~{::link})">
+		<title>SciManager - UFF</title>
+
+		<!-- chosen -->
+		<link th:href="@{/resources/css/chosen/chosen.min.css}" rel="stylesheet" type="text/css" />
+	</head>
+	<body class="nav-md">
+
+		<div class="container body">
+	        <div class="main_container">
+
+				<div th:replace="fragments/alert-messages"></div>
+	        	<div th:replace="fragments/left-col"></div>
+	        	<div th:replace="fragments/top-nav"></div>
+
+	        	<!-- page content -->
+	            <div class="right_col" role="main">
+
+	            	<!-- page body -->
+	            	<div class="page-main-content">
+						<div class="page-title">
+				            <div class="no-pad-left title_left col-md-12 col-sm-12 col-xs-12">
+				            	<div class="no-pad-left col-md-12 col-sm-12 col-xs-12">
+				            		<h2 >Perfil</h2>
+			                        <ol class="no-pad-left breadcrumb">
+			                        	<li class="breadcrumb-item">Usuários</li>
+									  	<li class="breadcrumb-item active">Perfil</li>
+									</ol>
+				            	</div>
+				            </div>
+				        </div>
+
+				        <div class="clearfix"></div>
+
+	            		<div class="row loaded-content">
+				            <div class="col-md-12">
+				                <div class="x_panel">
+	                                <div class="x_title">
+	                                    <h2>Informações de usuário</h2>
+	                                    <div class="clearfix"></div>
+	                                </div>
+	                                <div class="x_content">
+
+	                                    <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+
+	                                        <div class="profile_img">
+
+	                                            <!-- end of image cropping -->
+	                                            <div id="crop-avatar">
+	                                                <!-- Current avatar -->
+	                                                <div th:if="${user.hasProfileImage == true}" class="avatar-view">
+	                                                    <img data-toggle="tooltip" title="Alterar foto de perfil" data-placement="top" th:attr="data-user-id=|img-profile-${user.userId}|" class="img-async-load img-loading-big avatar-image" th:src="@{/resources/images/processing.gif}" alt="Avatar" />
+	                                                </div>
+
+	                                                <div th:if="${user.hasProfileImage != true}" class="avatar-view upload-profile-image-modal">
+	                                                    <img data-toggle="tooltip" title="Alterar foto de perfil" data-placement="top" th:src="@{/resources/images/user.png}" alt="Avatar" />
+	                                                </div>
+
+	                                            </div>
+	                                            <!-- end of image cropping -->
+												<div th:replace="fragments/user/profile-image-modal"></div>
+	                                        </div>
+	                                        <h3 id="user-username" th:text="${user.username}">[..]</h3>
+
+	                                        <ul class="list-unstyled user_data">
+	                                            <li>
+	                                                <i class="fa fa-briefcase user-profile-icon"></i> <span th:text="${user.userRole.roleName}">[..]</span>
+	                                            </li>
+
+	                                            <li class="m-top-xs">
+	                                                <a id="user-email" th:text="${user.email}">[..]</a>
+	                                            </li>
+
+	                                            <li th:if="${user.institution != null}" class="m-top-xs">
+	                                                <a id="user-institution" th:text="${user.institution}">[..]</a>
+	                                            </li>
+	                                            <li th:if="${user.institution == null}" class="m-top-xs">
+	                                                <a id="user-institution"></a>
+	                                            </li>
+	                                        </ul>
+
+	                                        <a data-toggle="modal" data-target=".bs-edit-user-modal-lg" class="edit-user btn btn-success"><i class="fa fa-edit m-right-xs"></i>Editar perfil</a>
+	                                        <br />
+
+	                                    </div>
+	                                    <div class="col-md-9 col-sm-9 col-xs-12">
+											<div class="x_panel dashboard-box">
+												<div class="x_title">
+													<h2><i class="fa fa-users"></i> Meus grupos</h2>
+													<div class="clearfix"></div>
+												</div>
+												<div class="user-group-container">
+													<div th:replace="fragments/user-group/profile-user-group-list-fragment"></div>
+												</div>
+											</div>
+	                                    </div>
+	                                </div>
+	                            </div>
+				            </div>
+				        </div>
+	            	</div>
+	            	<!-- /page body -->
+
+		            <div th:replace="fragments/footer"></div>
+	            </div>
+	            <!-- /page content -->
+
+	        </div>
+	    </div>
+
+	    <div th:replace="fragments/user/edit-user-modal"></div>
+
+		<th:block th:replace="fragments/base-layout :: common_scripts(~{::script})">
+			<!-- notification -->
+			<script th:src="@{/resources/js/notify/pnotify.core.js}"></script>
+			<script th:src="@{/resources/js/notify/pnotify.buttons.js}"></script>
+			<script th:src="@{/resources/js/notify/pnotify.nonblock.js}"></script>
+
+			<!-- chosen -->
+			<script th:src="@{/resources/js/chosen/chosen.jquery.min.js}"></script>
+
+			<!-- croppping -->
+		    <script th:src="@{/resources/js/cropping/cropper.min.js}"></script>
+		    <script th:src="@{/resources/js/cropping/main.js}"></script>
+
+			<!-- custom view js -->
+			<script th:src="@{/resources/js/custom-view-js/sci-manager.commons.js}"></script>
+			<script th:src="@{/resources/js/custom-view-js/notifications.commons.js}"></script>
+			<script th:src="@{/resources/js/custom-view-js/async-data.commons.js}"></script>
+			<script th:src="@{/resources/js/custom-view-js/filter-search.commons.js}"></script>
+			<script th:src="@{/resources/js/custom-view-js/popover.commons.js}"></script>
+
+			<script th:src="@{/resources/js/custom-view-js/user-details.js}"></script>
+		</th:block>
+
+	</body>
+</html>

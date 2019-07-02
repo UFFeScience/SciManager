@@ -1,0 +1,127 @@
+<!-- Create task modal -->
+<div class="modal fade bs-create-task-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+   	<div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="createTaskLabel">Criar tarefa</h4>
+            </div>
+            <div class="modal-body">
+
+            	<input th:if="${scientificProjectDTO != null}" id="scientific-project-id" type="hidden" th:value="${scientificProjectDTO.scientificProjectId}" />
+            	<input id="user-creator-id" type="hidden" th:value="${headerData.currentUser.userId}" />
+
+                <form method="post" id="create-task-form" th:object="${taskForm}" class="form-horizontal form-label-left" th:novalidate="true" role="form" th:action="@{/task-board/create-task}" accept-charset="UTF-8">
+
+					<div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="taskTitle">Título <span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+
+                            <input id="scientific-project-id-attribute" th:field="*{scientificProjectId}" type="hidden" value="${scientificProjectDTO.scientificProjectId}" name="scientificProjectId" />
+                            <input id="user-creator-id-attribute" th:field="*{userCreatorId}" type="hidden" value="${headerData.currentUser.userId}" name="userCreatorId" />
+
+                            <input th:required="true" th:field="*{taskTitle}" data-validate-length-range="1,150" maxlength="150" type="text" name="taskTitle" placeholder="Título da tarefa" class="form-control col-md-7 col-xs-12" />
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">Descrição </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                        	<textarea rows="2" placeholder="Descrição da tarefa" th:field="*{description}" maxlength="1000" data-validate-length-range="1,1000" name="description" class="textarea-fixed-size task-description-textarea form-control col-md-7 col-xs-12"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="urlRepository">URL do repositório </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                        	<input th:field="*{urlRepository}" data-validate-length-range="1,150" maxlength="150" type="url" name="urlRepository" placeholder="URL" class="optional form-control col-md-7 col-xs-12" />
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="phase-name">Dias estimados </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input id="estimated-days-input" type="number" min="0" max="1000" step="1" th:field="*{estimatedTime}" name="estimatedTime" placeholder="Dias estimados" class="number-input form-control col-md-7 col-xs-12" />
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                    	<label class="control-label col-md-3 col-sm-3 col-xs-12" for="phase-name">Data limite </label>
+	                    <div class="col-md-6 col-sm-6 col-xs-12 xdisplay_inputx form-group has-feedback">
+				            <input type="text" th:field="*{deadline}" name="deadline" class="form-control has-feedback-left calendar-filter date-input" placeholder="Data final" aria-describedby="inputSuccess2Status" />
+				            <span class="fa fa-calendar form-control-feedback left" aria-hidden="true"></span>
+				            <span id="inputSuccess2Status" class="sr-only">(success)</span>
+			            </div>
+			        </div>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Fase <span class="required">*</span></label>
+                        <div class="chosen-component-input phase-task col-md-6 col-sm-6 col-xs-12">
+                            <select th:if="${scientificProjectDTO != null}" th:required="true" th:field="*{phaseName}" name="phaseName" data-placeholder="Selecione fase do projeto científico" class="phase-select form-control" >
+                            	<option value=""></option>
+                            	<th:block th:each="phase : ${scientificProjectDTO.phases}">
+                               		<option th:value="${phase.phaseName}" th:text="${phase.phaseName}"></option>
+                               	</th:block>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Workflow</label>
+                        <div class="chosen-component-input workflow-task col-md-6 col-sm-6 col-xs-12">
+                            <select th:if="${scientificProjectDTO != null}" th:field="*{workflowName}" name="workflowName" data-placeholder="Selecione workflow" class="workflow-select form-control" >
+                                <option value=""></option>
+                                <option value="">Nenhum</option>
+                                <th:block th:each="workflow : ${scientificProjectDTO.workflows}">
+                                    <th:block th:if="${workflow.isEditablebyUser == true}">
+                               		   <option th:attr="data-group=${workflow.responsibleGroup.groupName}, data-workflow-id=${workflow.workflowId}" th:value="${workflow.workflowName}" th:text="${workflow.workflowName}"></option>
+                                    </th:block>
+                                </th:block>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                    	<label class="control-label col-md-3 col-sm-3 col-xs-12">Responsável </label>
+                        <div class="chosen-component-input workflow-task col-md-6 col-sm-6 col-xs-12">
+                            <p class="radio-inline">
+			                	<span class="responsible-group">Grupo:</span>
+			                	<input id="user-group-in-task" th:field="*{userGroupInTask}" type="hidden" name="userGroupInTask" />
+				                <input type="checkbox" id="group" class="flat" /> Usuários:
+				                <input type="checkbox" id="users" class="flat" />
+			            	</p>
+                        </div>
+			    	</div>
+
+			    	<div id="responsible-users" class="item form-group display-none">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Nome do usuário</label>
+                        <div class="add-usernames chosen-component-input col-md-6 col-sm-6 col-xs-12">
+                            <select th:field="*{usersInTask}" name="usersInTask" class="add-usernames-select form-control" multiple="multiple">
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                    	<label class="control-label col-md-3 col-sm-3 col-xs-12">Adicionar tags</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <ul id="task-tags" class="tags"></ul>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default cancel-button" data-dismiss="modal">Cancelar</button>
+                <button id="create-task-submit-button" type="button" class="action-button btn btn-success">
+                	<span class="action-text">Salvar</span>
+                	<i class="fa fa-spinner loading-action hide fa-pulse fa-2x fa-fw"></i>
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- /Create task modal -->

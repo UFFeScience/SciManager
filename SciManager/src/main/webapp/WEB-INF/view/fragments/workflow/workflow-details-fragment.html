@@ -1,0 +1,50 @@
+<div class="x_content">
+	<div class="row">
+		<div th:if="${workflowDTO != null}" class="project_detail">
+			<input id="search-workflow-details-url" type="hidden" name="searchUrl" th:value="${searchWorkflowDetailsUrl}" />
+			<input th:id="|project-id-${workflowDTO.workflowId}|" type="hidden" name="searchUrl" th:value="${workflowDTO.scientificProject.scientificProjectId}" />
+			<input th:id="|experiment-id-${workflowDTO.workflowId}|" type="hidden" name="searchUrl" th:value="${workflowDTO.scientificExperiment.scientificExperimentId}" />
+
+			<p class="title">
+				<span th:id="|workflow-name-${workflowDTO.workflowId}|" th:text="${workflowDTO.workflowName}">[..]</span>
+				<span th:if="${(headerData != null and headerData.currentUser != null and headerData.currentUser.userRole != T(com.uff.scimanager.domain.Role).USER) or (workflowDTO.isEditablebyUser == true)}" data-toggle="modal" data-target=".bs-edit-workflow-modal-lg" th:id="|edit-workflow-${workflowDTO.workflowId}|" class="edit-workflow">
+					<i data-toggle="tooltip" data-placement="top" title="Editar workflow" class="fa fa-pencil pointer"></i>
+				</span>
+			</p><p></p>
+
+			<p class="title">Versão do workflow</p>
+			<p>
+				<span id="workflow-current-version-number" th:text="${workflowDTO.currentVersion}"></span>
+				<i th:id="|workflow-version-${workflowDTO.workflowId}|" data-toggle="tooltip" data-placement="top" title="Editar versão do workflow" class="pointer workflow-editable-info edit-version-workflow fa fa-pencil"></i>
+			</p><p></p>
+
+			<p class="title">SGWfC</p>
+			<p>
+				<span th:id="|swfms-${workflowDTO.workflowId}|" th:text="${workflowDTO.swfms}"></span>
+			</p><p></p>
+
+			<p class="title">Grupo responsável:</p>
+			<p>
+				<span th:id="|responsible-group-${workflowDTO.workflowId}|" th:text="${workflowDTO.responsibleGroup.groupName}"></span>
+			</p><p></p>
+
+			<table class="project-details-table">
+				<tr>
+					<td>
+						<p class="title">Total de execuções: <span th:text="${totalWorkflowExecutions}"></span></p>
+					</td>
+				</tr>
+			</table>
+
+			<div class="alert-no-content alert alert-info alert-dismissible" role="alert" th:if="${workflowDTO == null}">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+				</button>
+				Workflow não encontrado
+			</div>
+
+			<div class="loading-data-async">
+				<i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+			</div>
+		</div>
+	</div>
+</div>

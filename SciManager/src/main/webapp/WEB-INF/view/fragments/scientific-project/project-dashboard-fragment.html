@@ -1,0 +1,183 @@
+<div class="row loaded-content">
+	<input th:if="${scientificProjectDTO != null}" id="is-editable" type="hidden" th:value="${scientificProjectDTO.isEditablebyUser}" />
+
+	<div class="project-metric-container col-md-8 pull-left">
+
+		<div th:if="${scientificProjectDTO != null and scientificProjectDTO.isEditablebyUser == true}" class="x_panel dashboard-box">
+			<div class="x_title">
+				<h2><i class="fa fa-area-chart"></i> Métricas</h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li class="expand-metric-chart pull-right"><a class="pointer"><i class="fa fa-expand"></i></a>
+					</li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="row">
+				<div class="x_title">
+					<input th:if="${scientificProjectDTO != null}" id="scientific-project-id" type="hidden" th:value="${scientificProjectDTO.scientificProjectId}" />
+
+					<div class="col-md-4 col-sm-4 col-xs-4 pull-left">
+						<div class="input-prepend pull-right input-group">
+							<span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+							<input type="text" name="period" class="metric-period-filter form-control active" placeholder="Filtrar período" value="" />
+							<i class="fa fa-chevron-down input-icon-right"></i>
+						</div>
+					</div>
+
+					<ul class="nav navbar-right panel_toolbox">
+						<li class="pointer"><a class="collapse-link">Filtro avançado <i class="fa fa-chevron-down"></i></a>
+						</li>
+					</ul>
+					<div class="clearfix"></div>
+				</div>
+
+				<div class="x_content gap-bottom10 no-gap-top" style="display:none;">
+
+					<div class="col-md-3 col-sm-3 col-xs-3 pull-left">
+						<label class="control-label col-md-12 col-sm-12 col-xs-12">Fase</label>
+						<div class="chosen-component-input filter-chosen phase-task col-md-12 col-sm-12 col-xs-12 filter-input-container">
+							<select th:if="${scientificProjectDTO != null}" th:required="true" name="phaseName" data-placeholder="Filtrar por fase" class="phase-select form-control" >
+								<option value=""></option>
+								<th:block th:each="phase : ${scientificProjectDTO.phases}">
+									<option th:value="${phase.phaseId}" th:text="${phase.phaseName}"></option>
+								</th:block>
+							</select>
+						</div>
+						<a class="btn-circle btn clear-select-btn clear-phase-select btn-xs pull-right">
+						   <i data-toggle="tooltip" data-placement="top" title="Limpar campo" class="fa fa-times"></i>
+						</a>
+					</div>
+
+					<div class="col-md-3 col-sm-3 col-xs-3 pull-left">
+						<label class="control-label col-md-12 col-sm-12 col-xs-12">Workflow</label>
+						<div class="chosen-component-input filter-chosen workflow-task col-md-12 col-sm-12 col-xs-12 filter-input-container">
+							<select th:if="${scientificProjectDTO != null}" th:required="true" name="workflowName" data-placeholder="Filtrar por workflow" class="workflow-metric-select form-control" >
+								<option value=""></option>
+								<th:block th:each="workflow : ${scientificProjectDTO.workflows}">
+									<option th:attr="data-group=${workflow.responsibleGroup.groupName}, data-workflow-id=${workflow.workflowId}" th:value="${workflow.workflowId}" th:text="${workflow.workflowName}"></option>
+								</th:block>
+							</select>
+						</div>
+						<a class="btn-circle btn clear-select-btn clear-workflow-select btn-xs pull-right">
+							<i data-toggle="tooltip" data-placement="top" title="Limpar campo" class="fa fa-times"></i>
+						</a>
+					</div>
+
+					<div class="col-md-3 col-sm-3 col-xs-3 pull-left">
+						<label class="control-label col-md-12 col-sm-12 col-xs-12">Usuário</label>
+						<div class="add-usernames chosen-component-input filter-chosen col-md-12 col-sm-12 col-xs-12 filter-input-container">
+							<select name="usersInTask" class="add-usernames-metric-select form-control">
+								<option value=""></option>
+							</select>
+						</div>
+						<a class="btn-circle btn clear-select-btn clear-user-select btn-xs pull-right">
+							<i data-toggle="tooltip" data-placement="top" title="Limpar campo" class="fa fa-times"></i>
+						</a>
+					</div>
+
+					<div class="col-md-3 col-sm-3 col-xs-3 pull-right">
+						<button disabled="disabled" id="generate-chart-button" type="button" class="btn btn-group filter-chart-button btn-success">Filtrar</button>
+					</div>
+				</div>
+			</div>
+
+			<div class="" role="tabpanel" data-example-id="togglable-tabs">
+				<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+					<li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Acumulativo</a>
+					</li>
+					<li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Diário</a>
+					</li>
+				</ul>
+				<div id="metricContainer" class="tab-content">
+					<div role="tabpanel" class="tab-pane active in loading-content-container chart-container" id="tab_content1" aria-labelledby="home-tab">
+						<div id="metric-cumulative"></div>
+						<div class="loading-data-async">
+							<i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+						</div>
+					</div>
+
+					<div role="tabpanel" class="tab-pane in loading-content-container chart-container" id="tab_content2" aria-labelledby="home-tab">
+						<div id="metric-daily"></div>
+						<div class="loading-data-async">
+							<i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- users of usergroup -->
+            <div th:if="${scientificProjectDTO != null}" class="hide">
+				<th:block th:each="workflow : ${scientificProjectDTO.workflows}">
+					<select th:id="|workflow-users-metric-select-${workflow.workflowId}|" class="hide">
+                        <th:block th:each="user : ${workflow.responsibleGroup.groupUsers}">
+                       		<option th:value="${user.userId}" th:text="${user.username}"></option>
+                       	</th:block>
+                	</select>
+				</th:block>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-4 col-xs-12 col-sm-12 col-lg-4 pull-right">
+		<div class="x_panel dashboard-box">
+			<div class="x_title">
+				<h2><i class="fa fa-briefcase"></i> Detalhes</h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li class="pull-right"><a class="pointer collapse-link"><i class="fa fa-chevron-up"></i></a>
+					</li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="project-details-container">
+				<div th:replace="fragments/scientific-project/project-details-fragment"></div>
+			</div>
+		</div>
+
+		<div th:if="${scientificProjectDTO != null and scientificProjectDTO.isEditablebyUser == true}" class="x_panel dashboard-box">
+			<div class="x_title">
+				<h2><i class="fa fa-tasks"></i> Tarefas</h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li class="pull-right"><a class="pointer collapse-link"><i class="fa fa-chevron-up"></i></a>
+					</li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="tasks-container">
+				<div th:replace="fragments/task/project-task-list-fragment"></div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-8 pull-left">
+		<div class="x_panel dashboard-box">
+			<div class="x_title">
+				<h2><i class="fa fa-flask"></i> Experimentos Científicos</h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li class="pull-right"><a class="pointer collapse-link"><i class="fa fa-chevron-up"></i></a>
+					</li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="experiments-container">
+				<div th:replace="fragments/scientific-experiment/project-experiment-list-fragment"></div>
+			</div>
+		</div>
+
+		<div class="x_panel dashboard-box">
+			<div class="x_title">
+				<h2><i class="fa fa-list-ol"></i> Fases</h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li class="pull-right"><a class="pointer collapse-link"><i class="fa fa-chevron-up"></i></a>
+					</li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="phases-container">
+				<div th:replace="fragments/phase/project-phase-list-fragment"></div>
+			</div>
+		</div>
+
+	</div>
+
+	<div th:replace="fragments/scientific-project/edit-scientific-project-modal"></div>
+</div>

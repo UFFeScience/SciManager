@@ -1,0 +1,15 @@
+ <!-- Search content -->
+<form id="search-form" role="form">
+	<div class="title_right col-md-10 col-sm-10 col-xs-12">
+    	 <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search advanced-search notification-filter">
+         	<button type="button" class="action-button btn btn-default search-button search-filter-button search-notification">
+            	<span class="action-text">Buscar</span>
+             	<i class="fa fa-spinner loading-action hide fa-pulse fa-2x fa-fw"></i>
+           	</button>
+           	<p class="radio-inline pull-right visualized-filter" th:with="notVisualized=${filter.getFieldValue('notVisualized')}">
+                <input type="checkbox" class="flat" name="notVisualized" value="true" th:checked="${notVisualized != null and notVisualized == true} ? true" /> Não visualizadas
+           	</p>
+     	</div>
+	</div>
+</form>
+<!-- /Search content -->

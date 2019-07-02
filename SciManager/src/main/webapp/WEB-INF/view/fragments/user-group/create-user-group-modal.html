@@ -1,0 +1,42 @@
+<!-- Create user group modal -->
+<div class="modal fade bs-create-group-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+   	<div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="createGroupLabel">Criar grupo de usuários</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post" id="create-user-group-form" th:object="${userGroupForm}" class="form-horizontal form-label-left" th:novalidate="true" role="form" th:action="@{/user-group/create-user-group}">
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="groupName">Nome do grupo <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input th:required="true" id="groupName" th:field="*{groupName}" type="text" name="groupName" data-validate-length-range="1,70" placeholder="Nome do grupo" class="form-control col-md-7 col-xs-12" />
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Adicione usuários</label>
+                        <div class="chosen-component-input new-usernames col-md-6 col-sm-6 col-xs-12">
+                            <select th:field="*{groupUsersEmails}" name="groupUsersEmails" class="new-usernames-select form-control" multiple="multiple">
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default cancel-button" data-dismiss="modal">Cancelar</button>
+                <button id="create-user-group-submit-button" type="button" class="action-button btn btn-success">
+                	<span class="action-text">Salvar</span>
+                	<i class="fa fa-spinner loading-action hide fa-pulse fa-2x fa-fw"></i>
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- /Create user group modal -->

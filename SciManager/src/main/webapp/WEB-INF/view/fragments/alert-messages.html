@@ -1,0 +1,7 @@
+<!-- Alert messages content -->
+<div class="display-none">
+   <span id="error-message-trigger" th:class="${errorMessage} != null and ${errorMessage.text} != null and ${errorMessage.text} != '' ? hasErrorMessage" th:text="${errorMessage} != null ? ${errorMessage.text}"></span>
+   <span id="success-message-trigger" th:class="${successMessage} != null and ${successMessage.text} != null and ${successMessage.text} != '' ? hasSuccessMessage" th:text="${successMessage} != null ? ${successMessage.text}"></span>
+   <span id="warning-message-trigger" th:class="${warningMessage} != null and ${warningMessage.text} != null and ${warningMessage.text} != '' ? hasWarningMessage" th:text="${warningMessage} != null ? ${warningMessage.text}"></span>
+</div>
+<!-- /Alert messages content -->

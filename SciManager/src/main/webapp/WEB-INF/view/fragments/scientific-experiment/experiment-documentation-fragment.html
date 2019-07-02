@@ -1,0 +1,47 @@
+<div class="row loaded-content">
+    <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
+        <div class="x_panel">
+
+            <div class="x_content">
+
+            	<div class="alert-no-content alert alert-info alert-dismissible" role="alert" th:if="${scientificExperimentDTO == null}">
+                	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                    </button>
+                    Experimento científico não existe
+                </div>
+
+				<div class="col-md-12 col-sm-12 col-xs-12 documentation-content">
+                    <th:block th:if="${scientificExperimentDTO != null}">
+                  		<div class="project-button-details">
+                            <div th:if="${scientificExperimentDTO != null and scientificExperimentDTO.isEditablebyUser == true}" class="pull-left documentation-buttons">
+                               	<button id="cancel-scientific-experiment-html" class="btn btn-default hide" type="button">Cancelar</button>
+                                <button id="edit-scientific-experiment-html" class="btn btn-default no-gap-right" type="button">Editar</button>
+                                <button id="save-scientific-experiment-html" class="btn btn-success hide no-gap-right" type="button">Salvar</button>
+                            </div>
+                        </div>
+
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+
+    	                        <div class="ibox-content no-padding">
+
+    								<div th:if="${experimentDocumentationHtml == null}" class="alert-no-content alert alert-info alert-dismissible no-documentation-yet" role="alert">
+                                       	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                                        </button>
+                                        Não há documentação para este experimento científico ainda.
+                                    </div>
+
+                                    <input id="documentation-scientific-experiment-id" type="hidden" th:name="scientificExperimentId" th:value="${scientificExperimentDTO.scientificExperimentId}" />
+
+    	                            <div class="html-scientific-experiment-doc-content wrapper p-md">
+                                        <div class="html-content" th:id="${experimentDocumentationHtml}" th:text="${experimentDocumentationHtml}">[..]</div>
+    	                            </div>
+    	                        </div>
+    	                    </div>
+                        </div>
+                    </th:block>
+	            </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+<!-- Edit user group name modal -->
+<div class="modal fade bs-edit-name-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+   	<div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="editGroupLabel">Editar nome do grupo</h4>
+            </div>
+            <div class="modal-body">
+            	<form method="post" class="form-horizontal form-label-left" th:novalidate="true" role="form">
+
+		            <div class="item form-group">
+		                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="edit-user-group-name-value">Digite novo nome <span class="required">*</span>
+		                </label>
+		                <div class="col-md-6 col-sm-6 col-xs-12">
+		                	<input id="edit-user-group-name-id" type="hidden" name="userGroupId" value="" />
+		                    <input th:required="true" id="edit-user-group-name-value" type="text" name="groupName" data-validate-length-range="1,70" placeholder="Nome do grupo" class="form-control col-md-7 col-xs-12" />
+		                </div>
+	                </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default cancel-button" data-dismiss="modal">Cancelar</button>
+                <button id="edit-user-group-name-submit-button" type="button" class="action-button btn btn-success">
+                	<span class="action-text">Salvar</span>
+                	<i class="fa fa-spinner loading-action hide fa-pulse fa-2x fa-fw"></i>
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- /Edit user group name modal -->

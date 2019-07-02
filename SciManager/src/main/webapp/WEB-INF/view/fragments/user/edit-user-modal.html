@@ -1,0 +1,71 @@
+<!-- Edit user modal -->
+<div class="modal fade bs-edit-user-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+   	<div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="editUserLabel">Editar usuário</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post" id="edit-user-form" class="form-horizontal form-label-left" th:novalidate="true" role="form" th:action="@{/user/edit-user}">
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="username">Nome de usuário/Login <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                        	<input id="user-id" type="hidden" name="userId" th:value="${user.userId}" />
+                            <input th:required="true" id="username" type="text" name="username" th:value="${user.username}" data-validate-length-range="1,70" placeholder="Nome de usuário/Login" class="form-control col-md-7 col-xs-12" />
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">e-mail <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="email" id="email" name="email" placeholder="e-mail" th:value="${user.email}" th:required="true" class="form-control col-md-7 col-xs-12" />
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="institution">Instituição </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" id="institution" placeholder="Nome da instituição" name="institution" th:value="${user.institution}" th:required="true" class="form-control col-md-7 col-xs-12" />
+                        </div>
+                    </div>
+                    <div class="x_title">
+	                    <h2>Alterar senha</h2>
+	                    <ul class="nav navbar-right panel_toolbox">
+	                        <li id="change-password" class="pull-right" data-toggle="collapse" data-target="#password-change"><a class="collapse-link"><i class="fa fa-chevron-up"></i></a> </li>
+	                    </ul>
+	                    <div class="clearfix"></div>
+	                </div>
+	                <div id="password-change" class="x_content collapse">
+	                    <br />
+						<div class="item form-group">
+	                        <label for="password" class="control-label col-md-3 col-sm-3 col-xs-12">Nova senha (5 a 12 caracteres) </label>
+	                        <div class="col-md-6 col-sm-6 col-xs-12">
+	                            <input id="password" placeholder="Senha" type="password" name="password" data-validate-length-range="5,12" class="form-control col-md-7 col-xs-12" />
+	                        </div>
+	                    </div>
+	                    <div class="item form-group">
+	                        <label for="password2" class="control-label col-md-3 col-sm-3 col-xs-12">Confirme a nova senha</label>
+	                        <div class="col-md-6 col-sm-6 col-xs-12">
+	                            <input id="repeated-password" placeholder="Senha" type="password" name="repeatedPassword" data-validate-linked="password" class="form-control col-md-7 col-xs-12" />
+	                        </div>
+	                    </div>
+
+	                </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default cancel-button" data-dismiss="modal">Cancelar</button>
+                <button id="edit-user-submit-button" type="button" class="action-button btn btn-success">
+                	<span class="action-text">Salvar</span>
+                	<i class="fa fa-spinner loading-action hide fa-pulse fa-2x fa-fw"></i>
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- /Edit user modal -->

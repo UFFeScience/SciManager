@@ -1,0 +1,101 @@
+<!-- page body -->
+<div class="page-main-content">
+	<div class="row loaded-content">
+		<div class="col-md-12 sci-manager-data-table-container">
+			<div class="x_panel">
+				<div class="x_content">
+
+					<div class="row">
+
+						<div class="clearfix"></div>
+						<!-- start boards list -->
+						<div class="table-container">
+							<table class="table default-sci-table">
+								<thead>
+									<tr>
+										<th>Nome do projeto científico</th>
+										<th>Grupos administradores</th>
+										<th style="width: 25%"></th>
+									</tr>
+								</thead>
+								<tbody>
+									<th:block th:each="scientificProject, row : ${scientificProjectDTOs}">
+										<tr>
+											<td>
+												<a th:href="@{|/scientific-project/${scientificProject.scientificProjectId}/project-details|}" th:text="${scientificProject.projectName}">[..]</a>
+												<br />
+											</td>
+											<td>
+												<a th:text="${scientificProject.responsibleGroupNames}">[..]</a>
+												<br />
+											</td>
+											<td class="actions">
+												<div class="btn-group data-details">
+													<a data-toggle="dropdown" class="dropdown-toggle btn btn-default btn-xs">
+														<i data-toggle="tooltip" data-placement="top" title="Ver detalhes" class="fa fa-folder-open"></i>
+													</a>
+													<ul class="dropdown-menu pull-right" role="menu">
+														<li role="presentation">
+															<a th:href="@{|/scientific-project/${scientificProject.scientificProjectId}/project-details?tab=dashboard|}">
+																<i class="fa fa-dashboard"></i> Dashboard do projeto
+															</a>
+														</li>
+														<li role="presentation">
+															<a th:href="@{|/scientific-project/${scientificProject.scientificProjectId}/project-details?tab=documentation||}">
+																<i class="fa fa-book"></i> Documentação
+															</a>
+														</li>
+														<li role="presentation">
+															<a th:href="@{|/scientific-project/${scientificProject.scientificProjectId}/project-details?tab=experiments|}">
+																<i class="fa fa-flask"></i> Experimentos científicos
+															</a>
+														</li>
+														<li th:if="${(headerData != null and headerData.currentUser != null and headerData.currentUser.userRole != T(com.uff.scimanager.domain.Role).USER) or (scientificProject != null and scientificProject.isEditablebyUser == true)}" role="presentation">
+															<a th:href="@{|/scientific-project/${scientificProject.scientificProjectId}/project-details?tab=phases|}">
+																<i class="fa fa-list-ol"></i> Fases
+															</a>
+														</li>
+														<li th:if="${scientificProject != null and scientificProject.isEditablebyUser == true}" role="presentation">
+															<a th:href="@{|/scientific-project/${scientificProject.scientificProjectId}/project-details?tab=taskBoard|}">
+																<i class="fa fa-columns"></i> Quadro de tarefas
+															</a>
+														</li>
+														<li th:if="${scientificProject != null and scientificProject.isEditablebyUser == true}" role="presentation">
+															<a th:href="@{|/scientific-project/${scientificProject.scientificProjectId}/project-details?tab=taskList|}">
+																<i class="fa fa-tasks"></i> Lista de tarefas
+															</a>
+														</li>
+													</ul>
+												</div>
+											</td>
+										</tr>
+									</th:block>
+								</tbody>
+							</table>
+						</div>
+						<!-- end boards list -->
+
+						<th:block th:if="${scientificProjectDTOs != null and scientificProjectDTOs.size() lt scientificProjectsTotal}">
+							<div class="text-center">
+								<a th:href="@{/scientific-project/all-scientific-projects(page=1, myOwn=true)}" class="btn btn-more btn-xs">
+									<i class="fa fa-search-plus"></i> Ver todos os projetos
+								</a>
+							</div>
+						</th:block>
+
+						<div class="alert-no-content alert alert-info alert-dismissible" role="alert" th:if="${scientificProjectDTOs != null and scientificProjectDTOs.isEmpty()}">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+							</button>
+							Nenhum projeto associado ao usuário
+						</div>
+
+						<div class="loading-data-async">
+							<i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

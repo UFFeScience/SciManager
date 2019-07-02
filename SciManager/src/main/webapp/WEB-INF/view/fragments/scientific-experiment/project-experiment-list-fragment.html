@@ -1,0 +1,110 @@
+<!-- page body -->
+<div class="page-main-content">
+	<div class="row loaded-content">
+		<div class="col-md-12 sci-manager-data-table-container">
+			<div class="x_panel">
+				<div class="x_content">
+
+					<div class="row">
+
+						<div class="col-md-12 col-sm-12 col-xs-12 no-pad-left" style="text-align:center;">
+							<div th:if="${headerData != null and headerData.currentUser != null and headerData.currentUser.userRole != T(com.uff.scimanager.domain.Role).USER}" class="pull-left">
+								<button id="create-scientific-experiment-button" type="button" class="btn btn-success no-gap-right" data-toggle="modal" data-target=".bs-create-experiment-modal-lg">Criar experimento <i class="fa fa-plus"></i></button>
+							</div>
+						</div>
+
+						<div class="clearfix"></div>
+
+						<input id="search-experiments-url" type="hidden" name="searchUrl" th:value="${searchExperimentsListUrl}" />
+						<input id="experiment-project-id" type="hidden" name="scientificProjectId" th:value="${scientificProjectId}" />
+
+						<!-- start experiment list -->
+						<div class="table-container">
+							<table class="table default-sci-table">
+								<thead>
+									<tr>
+										<th>Nome do experimento científico</th>
+										<th>Grupos responsáveis</th>
+										<th style="width: 25%"></th>
+									</tr>
+								</thead>
+								<tbody>
+									<th:block th:each="scientificExperiment, row : ${scientificExperimentDTOs}">
+										<tr th:id="|scientific-experiment-row-${scientificExperiment.scientificExperimentId}|" th:class="|row-${row.index}|">
+											<td>
+												<a th:id="|experiment-name-${scientificExperiment.scientificExperimentId}|" th:text="${scientificExperiment.experimentName}" th:href="@{|/scientific-experiment/${scientificExperiment.scientificExperimentId}/experiment-details|}">[..]</a>
+
+												<input th:id="|editable-scientific-experiment-${scientificExperiment.scientificExperimentId}|" type="hidden" th:value="${scientificExperiment.isEditablebyUser}"/>
+												<br />
+											</td>
+											<td>
+												<a th:text="${scientificExperiment.responsibleGroupNames}">[..]</a>
+												<br />
+											</td>
+											<td class="actions">
+												<div class="btn-group">
+													<a data-toggle="dropdown" class="dropdown-toggle btn btn-default btn-xs">
+														<i data-toggle="tooltip" data-placement="top" title="Ver detalhes" class="fa fa-folder-open"></i>
+													</a>
+													<ul class="dropdown-menu pull-right" role="menu">
+														<li role="presentation">
+			                                            	<a th:href="@{|/scientific-experiment/${scientificExperiment.scientificExperimentId}/experiment-details?tab=dashboard|}">
+	                                                			<i class="fa fa-dashboard"></i> Dashboard do experimento
+	                                                		</a>
+			                                            </li>
+														<li role="presentation">
+															<a th:href="@{|/scientific-experiment/${scientificExperiment.scientificExperimentId}/experiment-details?tab=documentation|}">
+	                                                			<i class="fa fa-book"></i> Documentação
+	                                                		</a>
+														</li>
+														<li role="presentation">
+															<a th:href="@{|/scientific-experiment/${scientificExperiment.scientificExperimentId}/experiment-details?tab=workflows|}">
+																<i class="fa fa-sitemap"></i> Workflows
+															</a>
+														</li>
+													</ul>
+												</div>
+
+												<a th:if="${(headerData != null and headerData.currentUser != null and headerData.currentUser.userRole != T(com.uff.scimanager.domain.Role).USER) or (scientificExperiment != null and scientificExperiment.isEditablebyUser == true)}" data-toggle="modal" data-target=".bs-edit-experiment-modal-lg" th:id="|edit-scientific-experiment-${scientificExperiment.scientificExperimentId}|" class="edit-scientific-experiment btn btn-default btn-xs">
+													<i data-toggle="tooltip" data-placement="top" title="Editar" class="fa fa-pencil"></i>
+												</a>
+												<a th:if="${headerData != null and headerData.currentUser != null and headerData.currentUser.userRole != T(com.uff.scimanager.domain.Role).USER}" th:id="|remove-scientific-experiment-${scientificExperiment.scientificExperimentId}|" data-toggle="modal" data-target=".bs-remove-scientific-experiment-modal-lg" type="button" class="remove-scientific-experiment-button btn btn-default btn-xs">
+													<i data-toggle="tooltip" data-placement="top" title="Remover" class="fa red fa-trash-o"></i>
+												</a>
+											</td>
+										</tr>
+									</th:block>
+								</tbody>
+							</table>
+						</div>
+						<!-- end experiment list -->
+
+						<th:block th:if="${scientificExperimentDTOs != null and scientificExperimentDTOs.size() lt scientificExperimentsTotal}">
+							<div class="text-center">
+								<a class="btn btn-more btn-xs pointer project-experiments">
+									<i class="fa fa-search-plus"></i> Ver todos
+								</a>
+							</div>
+						</th:block>
+
+						<div class="alert-no-content alert alert-info alert-dismissible" role="alert" th:if="${scientificExperimentDTOs != null and scientificExperimentDTOs.isEmpty()}">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+							</button>
+							Nenhum experimento científico encontrado
+						</div>
+
+						<div class="loading-data-async">
+	           				<i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+	           			</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div th:replace="fragments/scientific-experiment/create-scientific-experiment-modal"></div>
+		<div th:replace="fragments/scientific-experiment/edit-scientific-experiment-modal"></div>
+		<div th:replace="fragments/scientific-experiment/remove-scientific-experiment-modal"></div>
+	</div>
+</div>
+<!-- /page body -->

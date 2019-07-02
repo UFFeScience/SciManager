@@ -1,0 +1,33 @@
+<!-- Comparison of files modal -->
+<div class="modal fade bs-comparison-file-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+   	<div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title">Comparação de arquivos modelos</h4>
+            </div>
+            <div class="modal-body code-editor-body">
+                <div class="col-lg-12">
+                	<form id="alter-current-file-form" th:novalidate="true">
+                		<input type="hidden" th:name="modelFileId" class="alter-file-model-file-id" />
+                		<input type="hidden" th:name="workflowId" class="alter-file-workflow-id" />
+                	</form>
+
+                	<h2 th:if="${workflowDTO != null and workflowDTO.currentModelFile != null}" th:text="|Comparação com o arquivo atual|">[..]</h2>
+
+	            	<div class="files-comparson-diff"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="alter-current-file-button" type="button" class="action-button btn btn-success">
+                	<span class="action-text">Usar este arquivo como atual</span>
+                	<i class="fa fa-spinner loading-action hide fa-pulse fa-2x fa-fw"></i>
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- /Comparison of files modal -->
